@@ -1,0 +1,12 @@
+{% extends 'quotes/base.html' %}
+
+{% block content %}
+{% for quote in all_quotes %}
+    <p>{{quote}}</p>
+{% endfor %}
+
+{% for image in all_images %}
+    {% load static %}
+    <img src ="{% static image %}" alt="Darth Vader Image">
+{% endfor %}
+{% endblock %}

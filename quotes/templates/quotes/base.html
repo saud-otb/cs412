@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Darth Vader's Quote of the Day</title>
+        <link rel="stylesheet" href="{% static 'quotes/style.css' %}">
+    </head>
+
+    <body>
+        <h1>Darth Vader: Quote of the Day</h1>
+        <nav>
+            <table>
+                <tr>
+                    <th><a href="{% url 'quote_page' %}">Quote of the Day</a></th>
+                    <th><a href="{% url 'showall_page' %}">Show All</a></th>
+                    <th><a href="{% url 'about_page' %}">About</a></th>
+                </tr>
+            </table>
+        </nav>
+
+        {% block content %}
+        {% endblock %}
+    </body>
+</html>

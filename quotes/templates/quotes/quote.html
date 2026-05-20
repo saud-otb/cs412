@@ -1,0 +1,8 @@
+{% extends 'quotes/base.html' %}
+
+{% block content %}
+<p>{{chosen_quote}}</p>
+<br>
+{% load static %}
+<img src ="{% static chosen_image %}" alt="Darth Vader Image">
+{% endblock %}
