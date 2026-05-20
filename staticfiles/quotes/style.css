@@ -1,0 +1,40 @@
+body {
+    background-color: black;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 25px;
+}
+
+a {
+    color: yellow;
+    background-color: #222222;
+    padding: 8px;
+    margin: 5px;
+    border: 2px solid yellow;
+    text-decoration: none;
+    display: inline-block;
+}
+
+a:hover {
+    background-color: yellow;
+    color: black;
+}
+
+h1 {
+    color: yellow;
+    font-size: 36px;
+}
+
+p {
+    font-size: 20px;
+    color: white;
+    max-width: 900px;
+}
+
+img {
+    width: 350px;
+    height: 220px;
+    object-fit: cover;
+    border: 3px solid yellow;
+    margin: 10px;
+}
