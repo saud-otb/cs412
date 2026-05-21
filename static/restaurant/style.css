@@ -1,0 +1,48 @@
+body {
+    background-color: #fff3d6;
+    color: #222;
+    font-family: Georgia, serif;
+    margin: 25px;
+}
+
+h1 {
+    color: #f47c20;
+    font-size: 45px;
+}
+
+h2, h3 {
+    color: #222;
+}
+
+a {
+    color: #f47c20;
+    font-weight: bold;
+}
+
+a:hover {
+    color: #000;
+}
+
+p {
+    font-size: 20px;
+}
+
+form {
+    background-color: #ffd28a;
+    border-radius: 15px;
+    padding: 20px;
+    width: fit-content;
+}
+
+label {
+    font-size: 22px;
+    margin-right: 15px;
+}
+
+input, textarea, button {
+    font-size: 18px;
+    padding: 5px;
+    margin: 5px;
+}
+
+

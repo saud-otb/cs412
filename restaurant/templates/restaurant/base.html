@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html> 
+<html>
+    <head>
+        <title>Garfield's Lasagna Restaurant</title>
+        <link rel="stylesheet" href="{% static 'restaurant/style.css' %}">
+    </head>
+    <body>
+        <h1>Welcome to Garfield's Lasagna!</h1>
+        <img src="{% static 'restaurant/garfieldimage2.png' %}" alt ='Garfield image'>
+        <nav>
+            <table>
+                <tr>
+                    <th><a href="{% url 'main_page' %}">Main Page</a></th>
+                    <th><a href="{% url 'order_page' %}">Order Page</a></th>
+                </tr>
+            </table>
+        </nav>
+
+        {%  block content %}
+        {% endblock %}
+    </body>
+</html>

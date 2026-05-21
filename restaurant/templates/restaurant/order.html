@@ -1,0 +1,49 @@
+{% extends 'restaurant/base.html' %}
+
+{% block content %}
+    <form action="{% url 'confirmation_page' %}" method="POST">
+        {% csrf_token %}
+        <p>Choose one type of cheese ($2, Default is Ricotta) :</p>
+
+        <input type="radio" name="cheese" value="Ricotta">
+        <label>Ricotta</label>
+
+        <input type="radio" name="cheese" value="Mozzarella">
+        <label>Mozzarella</label>
+
+        <input type="radio" name="cheese" value="Parmesan">
+        <label>Parmesan</label>
+
+        <p>Choose any ($2 each):</p>
+
+        <input type="checkbox" name="topping" value="Meat">
+        <label>Meat</label>
+
+        <input type="checkbox" name="topping" value="Extra Cheese">
+        <label>Extra cheese</label>
+
+        <input type="checkbox" name="topping" value="Extra Sauce">
+        <label>Extra sauce</label>
+
+
+        <p>Today's Special ($3)</p>
+        <input type="radio" name="special" value={{special}}>
+        <label>{{special}}</label>
+
+        <p>Any special instruction?</p>
+        <textarea>Add any special instructions here.</textarea>
+
+        <p>Customer Information</p>
+
+        <label>Name:</label>
+        <input type="text" name="name">
+        
+        <label>Phone:</label>
+        <input type="text" name="phone">
+
+        <label>Email:</label>
+        <input type="text" name="email">
+
+        <input type="submit">
+    </form>
+{% endblock %}
