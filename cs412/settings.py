@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'hw', # Example 1 Application
     'quotes', # Assignment 1
     'restaurant', # Assignment 2
+    'mini_insta', # Assignment 3
 ]
 
 MIDDLEWARE = [
@@ -109,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/New_York'
 
 USE_I18N = True
 
