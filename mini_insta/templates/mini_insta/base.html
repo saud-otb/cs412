@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Mini Insta</title>
+         <link rel="stylesheet" href="{% static 'mini_insta/style.css' %}">
+    </head>
+    <body>
+        <header>
+            <h1 id="main-header">Mini Insta</h1>
+            <nav></nav>
+        </header>
+        {% block content %}
+        {% endblock %}
+        <footer>
+            <nav></nav>
+        </footer>
+    </body>
+</html>
