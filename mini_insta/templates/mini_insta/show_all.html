@@ -3,12 +3,14 @@
 {% block content %}
 <h1>Showing all profiles</h1>
 {% for profile in profiles %}
-<div class="profile">
-    <img src='{{profile.profile_image_url}}'>
-    <div class="name">
-        <h2>{{profile.display_name}}</h3>
-        <h3>{{profile.username}}</h3>
-    </div class="name">
-</div class="profile">
+<a href="{% url 'show_profile' profile.pk %}" class="link">
+    <div class="profile">
+        <img src='{{profile.profile_image_url}}'>
+        <div class="name">
+            <h2>{{profile.display_name}}</h3>
+            <h3>{{profile.username}}</h3>
+        </div class="name">
+    </div class="profile">
+</a>
 {% endfor %}
 {% endblock %}
