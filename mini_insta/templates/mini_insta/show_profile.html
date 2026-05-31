@@ -19,5 +19,16 @@
     <h2>{{profile.bio_text}}</h2>
 
     <h1>Posts</h1>
-    <h1>No Posts</h1>
+    {% for post in profile.get_all_posts %}
+        <h3>{{post.caption}}</h3>
+        {% if post.get_all_photos %}
+            {% for photo in post.get_all_photos %}
+                <img src="{{photo.image_url}}">
+            {% endfor %}
+        {% else %}
+            <h3>No Photos</h3>
+        {% endif %}
+        <a href="{% url 'show_post' post.pk %}">See Post</a>
+        <br>
+    {% endfor %}
 {% endblock %}
