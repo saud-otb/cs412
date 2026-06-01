@@ -1,3 +1,7 @@
+# File: views.py
+# Author: Saud Alotaibi
+# Description: Defines the app-level URL routes and connects each path to its matching view.
+
 from django.urls import path
 from django.conf import settings
 from .views import ProfileListView, ProfileDetailView, PostDetailView, CreatePostView

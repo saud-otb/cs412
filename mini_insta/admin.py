@@ -1,3 +1,7 @@
+# File: views.py
+# Author: Saud Alotaibi
+# Description: Registers models so they can be viewed and managed in the Django admin site.
+
 from django.contrib import admin
 
 # Register your models here.

@@ -1,7 +1,14 @@
+# File: views.py
+# Author: Saud Alotaibi
+# Description: Defines forms used to collect and validate user input.
+
 from django import forms
 from .models import *
 
 class CreatePostForm(forms.ModelForm):
+    '''A form to add a post to our database'''
+
     class Meta:
+        '''Associate this form with the Post model from our database'''
         model = Post
         fields = ['caption']

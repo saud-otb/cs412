@@ -1,3 +1,8 @@
+# File: views.py
+# Author: Saud Alotaibi
+# Description: Handles page logic, gets data from models, and sends it to templates.
+
+
 from django.shortcuts import render
 from django.urls import reverse
 from .models import Profile, Post, Photo
@@ -6,30 +11,42 @@ from .forms import CreatePostForm
 
 # Create your views here.
 class ProfileListView(ListView):
+    '''Displays a list of all profiles.'''
 
     model = Profile
     template_name = 'mini_insta/show_all.html'
     context_object_name = 'profiles'
 
 class ProfileDetailView(DetailView):
+    '''Displays the detail page for one profile.'''
 
     model = Profile
     template_name = 'mini_insta/show_profile.html'
     context_object_name = 'profile'
 
 class PostDetailView(DetailView):
+    '''Displays the detail page for one post'''
 
     model = Post
     template_name = 'mini_insta/show_post.html'
     context_object_name = 'post'
 
 class CreatePostView(CreateView):
+    '''Handles the creation of a post. 
+        1. Displays the HTML form to the user
+        2. Proccess the form submission and stores the new Post object'''
+    
+    # Specifies the form and HTML template that is going to be shown to the user. 
     form_class = CreatePostForm
     template_name = 'mini_insta/create_post_form.html'
 
     def get_context_data(self):
+        """Connects the post to the profile."""
+
+        # Gets the context dictionary
         context = super().get_context_data()
 
+        # Finds the profile using the primary key, stores it in the context dictionary
         pk = self.kwargs['pk']
         profile = Profile.objects.get(pk=pk)
         context['profile'] = profile
@@ -37,22 +54,32 @@ class CreatePostView(CreateView):
         return context
     
     def get_success_url(self):
+        """Returns the page to redirect to after the form is submitted successfully."""
+
+        # Redirects to the original profile
         pk = self.kwargs['pk']
         return reverse('show_profile', kwargs={'pk':pk})
 
     def form_valid(self, form):
+        """Handles the form submission and saves the new object to the Django database."""
+
+
+        # retrieve the PK from the URL pattern
         pk = self.kwargs['pk']
         profile = Profile.objects.get(pk=pk)
-        form.instance.profile = profile
+        form.instance.profile = profile  # attach this post to the profile
 
         # image_url = self.request.POST['image_url']
 
         # Photo.objects.create(post=self.object, image_url=image_url)
 
-        files = self.request.FILES.getlist('files')
+        files = self.request.FILES.getlist('files') # get all the image files in the form submission
 
+        # For each image file in the form submission, create a photo object with the image file
+        # and connect it to the post.
         for file in files:
             Photo.objects.create(post=self.object, image_file=file)
 
+        # delegate the work to the superclass method form_valid:
         return super().form_valid(form)
 
