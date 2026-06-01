@@ -13,11 +13,8 @@
         {% block content %}
         {% endblock %}
         <footer>
-            <a href="{% url 'show_all_profiles' %}"><img src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png" id="home"></a>
             <nav>
-                {% if profile %}
-                   <a href="{% url 'create_post' profile.pk %}">Create Post</a>
-                {% endif %}
+                <a href="{% url 'show_all_profiles' %}"><img src="https://cdn-icons-png.flaticon.com/512/3386/3386036.png" id="home"></a>
             </nav>
         </footer>
     </body>

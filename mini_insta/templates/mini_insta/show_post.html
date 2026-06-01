@@ -1,13 +1,15 @@
 {% extends 'mini_insta/base.html' %}
 
 {% block content %}
-    <h1>{{post.caption}}</h1>
-    <h3>Created at time {{post.timestamp}}</h3>
-    {% if post.get_all_photos %}
-            {% for photo in post.get_all_photos %}
-                <img src="{{photo.image_url}}">
-            {% endfor %}
-        {% else %}
-            <h3>No Photos</h3>
-        {% endif %}
+    <div class="detail_post">
+        <h1>{{post.caption}}</h1>
+        <h3>Created at time {{post.timestamp}}</h3>
+        {% if post.get_all_photos %}
+                {% for photo in post.get_all_photos %}
+                    <img src="{{photo.image_url}}">
+                {% endfor %}
+            {% else %}
+                <h3>No Photos</h3>
+            {% endif %}
+    </div>
 {% endblock %}

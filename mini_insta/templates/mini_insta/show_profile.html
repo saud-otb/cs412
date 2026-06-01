@@ -20,15 +20,19 @@
 
     <h1>Posts</h1>
     {% for post in profile.get_all_posts %}
-        <h3>{{post.caption}}</h3>
-        {% if post.get_all_photos %}
-            {% for photo in post.get_all_photos %}
-                <img src="{{photo.get_image_url}}">
-            {% endfor %}
-        {% else %}
-            <h3>No Photos</h3>
-        {% endif %}
-        <a href="{% url 'show_post' post.pk %}">See Post</a>
-        <br>
+        <div class="profile-post">
+            <h3>{{post.caption}}</h3>
+            {% if post.get_all_photos %}
+                <div class="post-photos">
+                    {% for photo in post.get_all_photos %}
+                        <img src="{{photo.get_image_url}}">
+                    {% endfor %}
+                </div> 
+            {% else %}
+                <h3>No Photos</h3>
+            {% endif %}
+            <a href="{% url 'show_post' post.pk %}">See Post</a>
+        </div>
     {% endfor %}
+    <a href="{% url 'create_post' profile.pk %}" id="create_post">Create Post</a>
 {% endblock %}
