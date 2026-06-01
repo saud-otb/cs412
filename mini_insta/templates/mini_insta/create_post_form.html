@@ -1,12 +1,12 @@
 {% extends 'mini_insta/base.html' %}
 
 {% block content %}
-<form action="{% url 'create_post' profile.pk %}" method="POST">
+<form action="{% url 'create_post' profile.pk %}" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <table>
         {{form.as_table}}
-        <label for="image_url">Image URL:</label>
-        <input type="text" name="image_url" id="image_url">
+        <label for="images">Select Photos:</label>
+        <input type="file" name="images" id="images" multiple>
     </table>
 
     <input type="submit" name="submit" value="Submit">

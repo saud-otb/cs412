@@ -33,7 +33,14 @@ class Photo(models.Model):
 
     post = models.ForeignKey("Post", on_delete=models.CASCADE)
     image_url = models.URLField(blank=True)
+    image_file = models.ImageField(blank=True)
     timestamp = models.DateTimeField(auto_now=True)
 
+    def get_image_url(self):
+        if self.image_url:
+            return self.image_url
+        else:
+            return self.image_file.url
+
     def __str__(self):
-        return f'{self.post.profile.username} posted a photo from this url: {self.image_url}'
+        return f'{self.post.profile.username} posted a photo from this url: {self.get_image_url()}'
