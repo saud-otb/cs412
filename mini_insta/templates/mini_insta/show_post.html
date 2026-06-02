@@ -11,5 +11,7 @@
             {% else %}
                 <h3>No Photos</h3>
             {% endif %}
+            <br>
+            <a href="{% url 'delete_post' post.pk %}" class="button">Delete Post</a>
     </div>
 {% endblock %}
