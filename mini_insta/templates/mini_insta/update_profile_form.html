@@ -1,0 +1,15 @@
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table>
+        {{form.as_table}}
+    </table>
+    <div class="form-buttons">
+        <input type="submit" name="submit" value="Submit">
+        <a href="{% url 'show_profile' profile.pk %}" id="cancel-button">Cancel</a>
+    </div>
+
+</form>
+{% endblock %}

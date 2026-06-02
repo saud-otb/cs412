@@ -6,8 +6,8 @@
 from django.shortcuts import render
 from django.urls import reverse
 from .models import Profile, Post, Photo
-from django.views.generic import ListView, DetailView, CreateView
-from .forms import CreatePostForm
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from .forms import CreatePostForm, UpdateProfileForm
 
 # Create your views here.
 class ProfileListView(ListView):
@@ -82,4 +82,12 @@ class CreatePostView(CreateView):
 
         # delegate the work to the superclass method form_valid:
         return super().form_valid(form)
+    
+
+class UpdateProfileView(UpdateView):
+    model = Profile
+    form_class = UpdateProfileForm
+    template_name = 'mini_insta/update_profile_form.html'
+
+    
 

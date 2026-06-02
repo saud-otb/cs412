@@ -210,3 +210,19 @@ input[type="submit"]:hover,
 #cancel-button:hover {
     background-color: #444;
 }
+
+#update-button {
+    text-align: center;
+    margin-top: 25px;
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #222;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 18px;
+    margin: 0 8px;
+    cursor: pointer;
+}

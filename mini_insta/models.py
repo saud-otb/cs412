@@ -3,6 +3,7 @@
 # Description: Defines the database structure for profiles, posts, and photos.
 
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 class Profile(models.Model):
@@ -17,6 +18,9 @@ class Profile(models.Model):
         '''Returns all posts created by this profile.'''
         all_posts = Post.objects.filter(profile=self).order_by('timestamp')
         return all_posts
+
+    def get_absolute_url(self):
+        return reverse('show_profile', kwargs={'pk':self.pk})
 
     def __str__(self):
         '''Return a string reprsentation of this profile object'''

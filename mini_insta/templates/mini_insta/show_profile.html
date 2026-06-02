@@ -6,6 +6,7 @@
 <div class="top-header">
     <img src="{{profile.profile_image_url}}">
     <h1>{{profile.display_name}}</h1>
+    <a href="{% url 'update_profile' profile.pk %}" id="update-button">Update Profile</a>
 </div>
 
     <div class="profile-information">
