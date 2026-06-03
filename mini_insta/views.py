@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from .models import Profile, Post, Photo
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .forms import CreatePostForm, UpdateProfileForm
+from .forms import CreatePostForm, UpdateProfileForm, UpdatePostForm
 
 # Create your views here.
 class ProfileListView(ListView):
@@ -114,4 +114,14 @@ class DeletePostView(DeleteView):
 
         profile = post.profile
         return reverse('show_profile', kwargs={'pk':profile.pk})
+    
+class UpdatePostView(UpdateView):
+    model = Post
+    form_class = UpdatePostForm
+    template_name = 'mini_insta/update_post_form.html'
+    context_object_name = 'post'
+
+    def get_success_url(self):
+        pk = self.kwargs['pk']
+        return reverse('show_post', kwargs={'pk':pk})
 

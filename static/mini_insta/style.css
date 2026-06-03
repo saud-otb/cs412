@@ -151,7 +151,7 @@ nav {
     margin-bottom: 25px;
 }
 
-.create_post_form {
+form {
     width: 650px;
     margin: 50px auto;
     padding: 35px;
@@ -160,11 +160,11 @@ nav {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
 }
 
-.create_post_form p {
+form p {
     margin-bottom: 25px;
 }
 
-.create_post_form label {
+form label {
     display: inline-block;
     margin-bottom: 10px;
     margin-right: 10px;
