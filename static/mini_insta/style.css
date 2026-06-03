@@ -247,3 +247,21 @@ input[type="submit"]:hover,
     margin: 0 8px;
     cursor: pointer;
 }
+
+.num-likes {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.num-likes img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.num-likes p {
+    margin: 0;
+    line-height: 1;
+    transform: translate(-10px, -7px);
+}

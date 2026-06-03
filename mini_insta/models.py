@@ -64,6 +64,17 @@ class Post(models.Model):
         '''Returns all photos connected to this post.'''
         all_photos = Photo.objects.filter(post=self).order_by('timestamp')
         return all_photos
+    
+    def get_all_comments(self):
+        comments = Comment.objects.filter(post=self)
+        return comments
+    
+    def get_likes(self):
+        likes = Likes.objects.filter(post=self)
+        len = 0
+        for like in likes:
+            len += 1
+        return len
 
     def __str__(self):
         '''Return a string representation of this post object'''
@@ -100,3 +111,20 @@ class Follower(models.Model):
         return f'{self.follower_profile} follows {self.profile}'
     
    
+class Comment(models.Model):
+    post = models.ForeignKey("Post", on_delete=models.CASCADE)
+    profile = models.ForeignKey("Profile", on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=True)
+    text = models.TextField(blank=True)
+
+    def __str__(self):
+        return f'{self.profile.username} wrote the following comment: {self.text}'
+    
+
+class Likes(models.Model):
+    post = models.ForeignKey("Post", on_delete=models.CASCADE)
+    profile = models.ForeignKey("Profile", on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.profile.username} liked the post made by {self.post.profile.username}'

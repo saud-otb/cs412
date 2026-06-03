@@ -11,7 +11,18 @@
             {% else %}
                 <h3>No Photos</h3>
             {% endif %}
+            <div class="num-likes">
+                <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/blue-like-button-icon.png">
+                <p>{{post.get_likes}}</p>
+            </div>
             <br>
+            <h2>Comments: </h2>
+            {% for comment in post.get_all_comments %}
+                <h2>{{comment.profile.username}}</h2>
+                <p>Created at time {{comment.timestamp}}</p>
+                <p>{{comment.text}}</p>
+            {% endfor %}
             <a href="{% url 'delete_post' post.pk %}" class="button">Delete Post</a>
+            <a href="{% url 'update_post' post.pk %}" class="button">Update Post</a>
     </div>
 {% endblock %}
