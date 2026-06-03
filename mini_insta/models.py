@@ -21,6 +21,33 @@ class Profile(models.Model):
 
     def get_absolute_url(self):
         return reverse('show_profile', kwargs={'pk':self.pk})
+    
+
+    def get_followers(self):
+        followers = Follower.objects.filter(profile=self)
+
+        followers_profile = []
+        for follower in followers:
+            followers_profile.append(follower.follower_profile)
+
+        return followers_profile
+    
+    def get_num_followers(self):
+        followers_profile = self.get_followers()
+        return len(followers_profile)
+
+    def get_following(self):
+        following = Follower.objects.filter(follower_profile=self)
+
+        following_profile = []
+        for follow in following:
+            following_profile.append(follow.profile)
+
+        return following_profile
+    
+    def get_num_following(self):
+        following_profiles = self.get_following()
+        return len(following_profiles)
 
     def __str__(self):
         '''Return a string reprsentation of this profile object'''
@@ -61,3 +88,15 @@ class Photo(models.Model):
     def __str__(self):
         '''Return the string repersentation of this photo object'''
         return f'{self.post.profile.username} posted a photo from this url: {self.get_image_url()}'
+    
+
+class Follower(models.Model):
+    profile = models.ForeignKey("Profile", on_delete=models.CASCADE, related_name="profile")
+    follower_profile = models.ForeignKey("Profile", on_delete=models.CASCADE, related_name="follower_profile")
+    timestamp = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        '''Return the string repersentation of this follower object'''
+        return f'{self.follower_profile} follows {self.profile}'
+    
+   

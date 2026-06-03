@@ -1,0 +1,16 @@
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<h1>You're Followed By:</h1>
+{% for following in profile.get_followers %}
+<a href="{% url 'show_profile' following.pk %}" class="link">
+    <div class="profile">
+        <img src='{{following.profile_image_url}}'>
+        <div class="name">
+            <h2>{{following.display_name}}</h3>
+            <h3>{{following.username}}</h3>
+        </div>
+    </div>
+</a>
+{% endfor %}
+{% endblock %}

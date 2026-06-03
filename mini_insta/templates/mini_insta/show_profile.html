@@ -12,11 +12,13 @@
     <div class="profile-information">
         <div class="profile-stats">   <p>Posts</p> <p>TBD</p> </div>
         
-        <div class="profile-stats"> <p>Followers</p> <p>TBD</p> </div>
+        <div class="profile-stats"> <p>Followers</p> <p>{{profile.get_num_followers}}</p></div>
 
-        <div class="profile-stats">   <p>Following</p> <p>TBD</p> </div>
+        <div class="profile-stats">  <p>Following</p> <p>{{profile.get_num_following}}</p></div>
     </div>
-
+    
+    <a href="{% url 'show_followers' profile.pk %}" class="button">See Followers</a>
+    <a href="{% url 'show_following' profile.pk %}" class="button">See Following</a>
     <h2>{{profile.bio_text}}</h2>
 
     <h1>Posts</h1>
