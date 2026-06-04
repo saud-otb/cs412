@@ -12,7 +12,7 @@
             </a>
         </div>
         {% if post.get_first_photo %}
-            <img src="{{post.get_first_photo}}" class="post-photo">
+            <img src="{{post.get_first_photo.get_image_url}}" class="post-photo">
         {% endif %}
         <p>{{ post.caption }}</p>
         <div class="num-likes">
