@@ -70,6 +70,12 @@ class Post(models.Model):
         all_photos = Photo.objects.filter(post=self).order_by('timestamp')
         return all_photos
     
+    def get_first_photo(self):
+        all_photos = self.get_all_photos()
+        if all_photos == None or len(all_photos) == 0:
+            return
+        return all_photos[0]
+        
     def get_all_comments(self):
         comments = Comment.objects.filter(post=self)
         return comments
@@ -96,10 +102,11 @@ class Photo(models.Model):
         '''Returns the url of this image'''
 
         # If image_url is null, it returns the image file's url
-        if self.image_url:
-            return self.image_url
+        photo = self.post.get_first_photo()
+        if photo.image_url:
+            return photo.image_url
         else:
-            return self.image_file.url
+            return photo.image_file.url
 
     def __str__(self):
         '''Return the string repersentation of this photo object'''

@@ -6,7 +6,11 @@
         <h3>Created at time {{post.timestamp}}</h3>
         {% if post.get_all_photos %}
                 {% for photo in post.get_all_photos %}
-                    <img src="{{photo.image_url}}">
+                    {% if photo.image_url %}
+                        <img src="{{photo.image_url}}">
+                    {% else %}
+                        <img src="{{photo.image_file.url}}">
+                    {% endif %}
                 {% endfor %}
             {% else %}
                 <h3>No Photos</h3>
@@ -25,4 +29,10 @@
             <a href="{% url 'delete_post' post.pk %}" class="button">Delete Post</a>
             <a href="{% url 'update_post' post.pk %}" class="button">Update Post</a>
     </div>
+
+    <footer>
+        <nav>
+            <a href="{% url 'show_profile' post.profile.pk %}"><img src="https://www.svgrepo.com/show/114939/go-back-arrow.svg"></a>
+        </nav>
+    </footer>
 {% endblock %}

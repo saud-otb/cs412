@@ -13,4 +13,9 @@
     </div class="profile">
 </a>
 {% endfor %}
+<footer>
+        <nav>
+            <a href="{% url 'show_profile' profile.pk %}"><img src="https://www.svgrepo.com/show/114939/go-back-arrow.svg"></a>
+        </nav>
+    </footer>
 {% endblock %}

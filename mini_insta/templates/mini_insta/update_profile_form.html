@@ -8,8 +8,12 @@
     </table>
     <div class="form-buttons">
         <input type="submit" name="submit" value="Submit">
-        <a href="{% url 'show_profile' profile.pk %}" id="cancel-button">Cancel</a>
+        <a href="{% url 'show_profile' profile.pk %}" id="cancel-button" class="button">Cancel</a>
     </div>
-
 </form>
+<footer>
+        <nav>
+            <a href="{% url 'show_profile' profile.pk %}"><img src="https://www.svgrepo.com/show/114939/go-back-arrow.svg"></a>
+        </nav>
+</footer>
 {% endblock %}

@@ -73,15 +73,20 @@ class CreatePostView(CreateView):
 
         # Photo.objects.create(post=self.object, image_url=image_url)
 
-        files = self.request.FILES.getlist('files') # get all the image files in the form submission
 
+        # delegate the work to the superclass method form_valid:
+        response = super().form_valid(form)
+
+       
+       
         # For each image file in the form submission, create a photo object with the image file
         # and connect it to the post.
+        
+        files = self.request.FILES.getlist('files') # get all the image files in the form submission
         for file in files:
             Photo.objects.create(post=self.object, image_file=file)
 
-        # delegate the work to the superclass method form_valid:
-        return super().form_valid(form)
+        return response
     
 
 class UpdateProfileView(UpdateView):

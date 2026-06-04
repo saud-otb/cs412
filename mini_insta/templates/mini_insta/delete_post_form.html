@@ -15,11 +15,14 @@
     </div>
 <form action="{% url 'delete_post' post.pk %}" method="POST">
     {% csrf_token %}
-    <input type="submit" value="Delete" id="delete-button">
+    <div class="form-buttons">
+    <input type="submit" value="Delete">
+    <a href="{% url 'show_post' post.pk %}" class="cancel-button">Cancel</a>
+    </div>
 </form>
-
-<form action="{% url 'show_profile' profile.pk %}" id="cancel-delete-button">
-    {% csrf_token %}
-    <input type="submit" value="Cancel">
-</form>
+<footer>
+        <nav>
+            <a href="{% url 'show_profile' profile.pk %}"><img src="https://www.svgrepo.com/show/114939/go-back-arrow.svg"></a>
+        </nav>
+</footer>
 {% endblock %}

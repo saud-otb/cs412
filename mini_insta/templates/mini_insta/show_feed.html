@@ -6,14 +6,14 @@
     <div class="feed-post">
         <div class="post-header">
             <a href="{% url 'show_profile' post.profile.pk %}">
-                <img src="{{ post.profile.profile_image_url }}" alt="Profile image">
+                <img src="{{post.profile.profile_image_url}}" alt="Profile image">
                 <h2>{{ post.profile.display_name }}</h2>
                 <h3>{{ post.profile.username }}</h3>
             </a>
         </div>
-        {% for photo in post.get_all_photos %}
-            <img src="{{ photo.image_url }}" alt="Post photo" class="post-photo">
-        {% endfor %}
+        {% if post.get_first_photo %}
+            <img src="{{post.get_first_photo}}" class="post-photo">
+        {% endif %}
         <p>{{ post.caption }}</p>
         <div class="num-likes">
             <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/blue-like-button-icon.png">
@@ -23,13 +23,17 @@
             <h3>Comments</h3>
             {% for comment in post.get_comments %}
                 <div class="comment">
-                    <strong>{{ comment.profile.username }}</strong>
-                    <p>{{ comment.text }}</p>
+                    <strong>{{comment.profile.username}}</strong>
+                    <p>{{comment.text}}</p>
                 </div>
-            {% empty %}
-                <p>No comments yet.</p>
             {% endfor %}
         </div>
     </div>
+
 {% endfor %}
+<footer>
+    <nav>
+        <a href="{% url 'show_profile' profile.pk %}"><img src="https://www.svgrepo.com/show/114939/go-back-arrow.svg"></a>
+    </nav>
+</footer>
 {% endblock %}

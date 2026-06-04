@@ -192,7 +192,7 @@ input[type="file"] {
 }
 
 input[type="submit"],
-#cancel-button {
+.cancel-button {
     display: inline-block;
     padding: 12px 24px;
     background-color: #222;
@@ -233,7 +233,7 @@ input[type="submit"]:hover,
 }
 
 .button {
-     text-align: center;
+    text-align: center;
     margin-top: 25px;
     display: inline-block;
     padding: 12px 24px;
@@ -323,4 +323,10 @@ input[type="submit"]:hover,
 
 #post-feed-likes {
     transform: translate(5px, 3px);
+}
+
+.navigation-icons {
+    display: flex;
+    width: 20px;
+    height: 20px;
 }
