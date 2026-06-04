@@ -1,11 +1,15 @@
+<!--Displays the form used to update an existing profile's information.-->
+
 {% extends 'mini_insta/base.html' %}
 
 {% block content %}
+<!--Form for updating the selected profile-->
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <table>
         {{form.as_table}}
     </table>
+    <!--Submit and cancel buttons-->
     <div class="form-buttons">
         <input type="submit" name="submit" value="Submit">
         <a href="{% url 'show_profile' profile.pk %}" id="cancel-button" class="button">Cancel</a>

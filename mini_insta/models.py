@@ -24,32 +24,41 @@ class Profile(models.Model):
     
 
     def get_followers(self):
+        '''Returns all profiles that follow this profile'''
         followers = Follower.objects.filter(profile=self)
 
+        # Converts this from a QuerySet to a list
         followers_profile = []
         for follower in followers:
             followers_profile.append(follower.follower_profile)
 
+        # Returns the list
         return followers_profile
     
     def get_num_followers(self):
+        '''Returns the number of followers following this profile'''
         followers_profile = self.get_followers()
         return len(followers_profile)
 
     def get_following(self):
+        '''Returns the all the profiles that this profile is following'''
         following = Follower.objects.filter(follower_profile=self)
 
+        # Converts this from a QuerySet
         following_profile = []
         for follow in following:
             following_profile.append(follow.profile)
 
+        # Returns the list
         return following_profile
     
     def get_num_following(self):
+        '''Returns the number of profiles that this profile is following'''
         following_profiles = self.get_following()
         return len(following_profiles)
     
     def get_post_feed(self):
+        '''Returns the all the posts from the followed profiles from this profile'''
         following_profiles = self.get_following()
         post_feed = Post.objects.filter(profile__in=following_profiles).order_by("-timestamp")
         return post_feed
@@ -71,16 +80,19 @@ class Post(models.Model):
         return all_photos
     
     def get_first_photo(self):
+        '''Returns the first photo from get_all_photos'''
         all_photos = self.get_all_photos()
         if all_photos == None or len(all_photos) == 0:
             return
         return all_photos[0]
         
     def get_all_comments(self):
+        '''Returns all the comments on this post'''
         comments = Comment.objects.filter(post=self)
         return comments
     
     def get_likes(self):
+        '''Returns the number of likes on this post'''
         likes = Likes.objects.filter(post=self)
         len = 0
         for like in likes:
@@ -114,6 +126,7 @@ class Photo(models.Model):
     
 
 class Follower(models.Model):
+    '''Represents a profile following another profile'''
     profile = models.ForeignKey("Profile", on_delete=models.CASCADE, related_name="profile")
     follower_profile = models.ForeignKey("Profile", on_delete=models.CASCADE, related_name="follower_profile")
     timestamp = models.DateTimeField(auto_now=True)
@@ -124,19 +137,23 @@ class Follower(models.Model):
     
    
 class Comment(models.Model):
+    '''Represents a comment posted by a profile on a certain post'''
     post = models.ForeignKey("Post", on_delete=models.CASCADE)
     profile = models.ForeignKey("Profile", on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now=True)
     text = models.TextField(blank=True)
 
     def __str__(self):
+        '''Returns the string representation of this Comment object'''
         return f'{self.profile.username} wrote the following comment: {self.text}'
     
 
 class Likes(models.Model):
+    '''Represents a profile like a certain post'''
     post = models.ForeignKey("Post", on_delete=models.CASCADE)
     profile = models.ForeignKey("Profile", on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now=True)
 
     def __str__(self):
+        '''Returns the string representation of this Likes object'''
         return f'{self.profile.username} liked the post made by {self.post.profile.username}'

@@ -81,7 +81,7 @@ class CreatePostView(CreateView):
        
         # For each image file in the form submission, create a photo object with the image file
         # and connect it to the post.
-        
+
         files = self.request.FILES.getlist('files') # get all the image files in the form submission
         for file in files:
             Photo.objects.create(post=self.object, image_file=file)
@@ -90,18 +90,20 @@ class CreatePostView(CreateView):
     
 
 class UpdateProfileView(UpdateView):
+    '''Displays the HTML form to the user to update their profile and handles the form submission'''
     model = Profile
     form_class = UpdateProfileForm
     template_name = 'mini_insta/update_profile_form.html'
 
 
 class DeletePostView(DeleteView):
-
+    '''Displays the HTML form to the user to delete their post and handles the form submission'''
     model = Post
     template_name = 'mini_insta/delete_post_form.html'
     context_object_name = 'post'
 
     def get_context_data(self, **kwargs):
+        '''Includes the profile of the post and the post itself in the context dictionary'''
         context = super().get_context_data()
 
         pk = self.kwargs['pk']
@@ -114,38 +116,48 @@ class DeletePostView(DeleteView):
         return context
     
     def get_success_url(self):
+        '''Returns a url after the user successfully deletes their post'''
         pk = self.kwargs['pk']
         post = Post.objects.get(pk=pk)
 
+        # Redirect the user to their profile page after deleting the post
         profile = post.profile
         return reverse('show_profile', kwargs={'pk':profile.pk})
     
 class UpdatePostView(UpdateView):
+    '''Displays the HTML form to the user to update their post and handles the form submission'''
     model = Post
     form_class = UpdatePostForm
     template_name = 'mini_insta/update_post_form.html'
     context_object_name = 'post'
 
     def get_success_url(self):
+        '''Returns a url after the user successfully deletes their post'''
+
+        # Redirects the user to their post after successfully updating it
         pk = self.kwargs['pk']
         return reverse('show_post', kwargs={'pk':pk})
 
 class ShowFollowersDetailView(DetailView):
+    '''Displays the page to show the user all profiles that are following them'''
     model = Profile
     template_name = 'mini_insta/show_followers.html'
     context_object_name = 'profile'
 
 class ShowFollowingDetailView(DetailView):
+    '''Displays the page to show the user all the profiles that they are following'''
     model = Profile
     template_name = 'mini_insta/show_following.html'
     context_object_name = 'profile'
 
 class ShowFeedView(DetailView):
+    '''Displays a list of posts from all the profiles that the user is following'''
     model = Profile
     template_name = 'mini_insta/show_feed.html'
     context_object_name = 'profile'
 
 class SearchView(ListView):
+    '''Displays an HTML form for the user to search profiles and posts, and handles the form submission'''
     model = Profile
     template_name = 'mini_insta/search_results.html'
     context_object_name = 'profiles'

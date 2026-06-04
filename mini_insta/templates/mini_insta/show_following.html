@@ -1,8 +1,11 @@
+<!--Displays all profiles followed by the selected profile.-->
+
 {% extends 'mini_insta/base.html' %}
 
 {% block content %}
 <h1>You're Following: </h1>
 {% for following in profile.get_following %}
+<!--Displays all profiles followed by this profile-->
 <a href="{% url 'show_profile' profile.pk %}" class="link">
     <div class="profile">
         <img src='{{following.profile_image_url}}'>

@@ -1,7 +1,10 @@
+<!--Displays the details of one post, including its photos, caption, likes, and comments.-->
+
 {% extends 'mini_insta/base.html' %}
 
 {% block content %}
     <div class="detail_post">
+        <!--Displays the selected post and its photos-->
         <h1>{{post.caption}}</h1>
         <h3>Created at time {{post.timestamp}}</h3>
         {% if post.get_all_photos %}
@@ -15,11 +18,13 @@
             {% else %}
                 <h3>No Photos</h3>
             {% endif %}
+            <!--Displays likes and comments-->
             <div class="num-likes">
                 <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/blue-like-button-icon.png">
                 <p>{{post.get_likes}}</p>
             </div>
             <br>
+            <!--Shows all the comments on a post, the commenter's username, the timestamp, and the text--> 
             <h2>Comments: </h2>
             {% for comment in post.get_all_comments %}
                 <h2>{{comment.profile.username}}</h2>

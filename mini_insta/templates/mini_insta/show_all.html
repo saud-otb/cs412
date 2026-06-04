@@ -1,7 +1,9 @@
+<!--Displays a list of all user profiles in the Mini Insta application.-->
 {% extends 'mini_insta/base.html' %}
 
 {% block content %}
 <h1>Showing all profiles</h1>
+<!--Displays each profile's username, display name, and profile image-->
 {% for profile in profiles %}
 <a href="{% url 'show_profile' profile.pk %}" class="link">
     <div class="profile">

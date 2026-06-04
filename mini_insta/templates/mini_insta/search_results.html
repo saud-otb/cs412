@@ -1,3 +1,4 @@
+<!--Displays the profiles and posts that match the user's search query.-->
 {% extends 'mini_insta/base.html' %}
 
 
@@ -10,6 +11,7 @@
 <h2>Profiles</h2>
 
 {% for profile_result in profiles %}
+    <!--Displays matching profiles-->
     <a href="{% url 'show_profile' profile_result.pk %}">
         <div class="profile">
             <img src="{{ profile_result.profile_image_url }}">
@@ -19,14 +21,13 @@
             </div>
         </div>
     </a>
-{% empty %}
-    <p>No matching profiles.</p>
-{% endfor %}
+{% endfor %}    
 
 <h2>Posts</h2>
 
 {% for post in posts %}
     <div class="feed-post">
+        <!--Displays matching posts-->
         <a href="{% url 'show_profile' post.profile.pk %}">
             <h3>{{ post.profile.username }}</h3>
         </a>
@@ -39,8 +40,5 @@
 
         <p>{{ post.caption }}</p>
     </div>
-{% empty %}
-    <p>No matching posts.</p>
 {% endfor %}
-
 {% endblock %}

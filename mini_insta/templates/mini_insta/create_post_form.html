@@ -1,7 +1,9 @@
+<!--Displays the form used to create a new post and upload one or more photos.-->
 {% extends 'mini_insta/base.html' %}
 
 {% block content %}
 <div class="create-post-form">
+    <!--Form for creating a post and uploading photos-->
     <form action="{% url 'create_post' profile.pk %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <table>
@@ -10,6 +12,7 @@
             <input type="file" name="files" id="images" multiple>
         </table>
 
+        <!--Submit and cancel buttons-->
         <div class="form-buttons">
             <input type="submit" name="submit" value="Submit">
             <a href="{% url 'show_profile' profile.pk %}" id="cancel-button">Cancel</a>

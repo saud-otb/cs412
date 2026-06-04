@@ -1,10 +1,15 @@
+<!--Displays posts from the profiles followed by the selected user, with the 
+ most recent posts appearing first.-->
+
 {% extends 'mini_insta/base.html' %}
 
 {% block content %}
 <h1>Post Feed</h1>
 {% for post in profile.get_post_feed %}
+<!--Displays posts from followed profiles-->
     <div class="feed-post">
         <div class="post-header">
+            <!--Shows the post photo, caption, likes, and comments-->
             <a href="{% url 'show_profile' post.profile.pk %}">
                 <img src="{{post.profile.profile_image_url}}" alt="Profile image">
                 <h2>{{ post.profile.display_name }}</h2>

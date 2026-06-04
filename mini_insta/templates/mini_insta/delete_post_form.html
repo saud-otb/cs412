@@ -1,8 +1,10 @@
+<!--Displays a confirmation form before deleting an existing post.-->
 {% extends 'mini_insta/base.html' %}
 
 {% block content %}
 <h1>Do you want to delete this post?</h1>
 <div class="detail_post">
+    <!--Shows the user the post that they're going to delete-->
     <h1>{{post.caption}}</h1>
     <h3>Created at time {{post.timestamp}}</h3>
     {% if post.get_all_photos %}
@@ -13,12 +15,14 @@
             <h3>No Photos</h3>
         {% endif %}
     </div>
-<form action="{% url 'delete_post' post.pk %}" method="POST">
-    {% csrf_token %}
-    <div class="form-buttons">
-    <input type="submit" value="Delete">
-    <a href="{% url 'show_post' post.pk %}" class="cancel-button">Cancel</a>
-    </div>
+    <!--Displays the post deletion confirmation form-->
+    <form action="{% url 'delete_post' post.pk %}" method="POST">
+        {% csrf_token %}
+        <div class="form-buttons">
+            <!--Confirm or cancel deletion-->
+            <input type="submit" value="Delete">
+            <a href="{% url 'show_post' post.pk %}" class="cancel-button">Cancel</a>
+        </div>
 </form>
 <footer>
         <nav>

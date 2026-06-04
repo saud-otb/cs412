@@ -1,11 +1,16 @@
+<!--Displays the form used to update the caption-->
+
+
 {% extends 'mini_insta/base.html' %}
 
 {% block content %}
+<!--Form for updating the selected post-->
 <form action="{% url 'update_post' post.pk %}" method="POST">
     {% csrf_token %}
     <table>
         {{form.as_table}}
     </table>
+    <!--Submit and cancel buttons-->
     <div class="form-buttons">
         <input type="submit" value="Update" class="form-buttons">
         <a href="{% url 'show_post' post.pk %}" class="cancel-button">Cancel</a>

@@ -1,3 +1,6 @@
+<!--Displays a user's profile information, posts, follower count, following
+ count, and profile-related actions.-->
+
 {% extends 'mini_insta/base.html' %}
 
 {% block content %}
@@ -8,7 +11,7 @@
     <h1>{{profile.display_name}}</h1>
     <a href="{% url 'update_profile' profile.pk %}" id="update-button">Update Profile</a>
 </div>
-
+    <!--Displays the profile information-->
     <div class="profile-information">
         <div class="profile-stats">   <p>Posts</p> <p>TBD</p> </div>
         
@@ -23,6 +26,7 @@
 
     <h1>Posts</h1>
     {% for post in profile.get_all_posts %}
+        <!--Displays all posts created by this profile-->
         <div class="profile-post">
             <h3>{{post.caption}}</h3>
             {% if post.get_all_photos %}
