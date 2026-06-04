@@ -1,0 +1,20 @@
+{% extends 'mini_insta/base.html' %}
+
+
+{% block content %}
+
+<h1>Search</h1>
+
+<p>{{profile.username}}</p>
+
+<form method="GET">
+    <label>Search for text, tags, or people:</label>
+    <br>
+
+    <textarea name="query"></textarea>
+    <br>
+
+    <button type="submit">Search</button>
+</form>
+
+{% endblock %}

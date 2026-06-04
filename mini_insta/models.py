@@ -48,6 +48,11 @@ class Profile(models.Model):
     def get_num_following(self):
         following_profiles = self.get_following()
         return len(following_profiles)
+    
+    def get_post_feed(self):
+        following_profiles = self.get_following()
+        post_feed = Post.objects.filter(profile__in=following_profiles).order_by("-timestamp")
+        return post_feed
 
     def __str__(self):
         '''Return a string reprsentation of this profile object'''

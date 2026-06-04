@@ -134,3 +134,48 @@ class ShowFollowingDetailView(DetailView):
     model = Profile
     template_name = 'mini_insta/show_following.html'
     context_object_name = 'profile'
+
+class ShowFeedView(DetailView):
+    model = Profile
+    template_name = 'mini_insta/show_feed.html'
+    context_object_name = 'profile'
+
+class SearchView(ListView):
+    model = Profile
+    template_name = 'mini_insta/search_results.html'
+    context_object_name = 'profiles'
+
+    def dispatch(self, request, *args, **kwargs):
+        
+        if 'query' not in self.request.GET:
+            pk = self.kwargs['pk']
+            profile = Profile.objects.get(pk=pk)
+            context = {'profile': profile}
+
+            return render(request, 'mini_insta/search.html', context)
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        query = self.request.GET['query']
+        posts = Post.objects.filter(caption__contains=query)
+        return posts
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+
+        pk = self.kwargs['pk']
+        profile = Profile.objects.get(pk=pk)
+
+        query = ""
+        if 'query' in self.request.GET:
+            query = self.request.GET['query']
+        
+        profiles = Profile.objects.filter(username__contains=query) | Profile.objects.filter(display_name__contains=query) | Profile.objects.filter(bio_text__contains=query)
+
+        context['profile'] = profile
+        context['query'] = query
+        context['profiles'] = profiles
+        context['posts'] = self.get_queryset()
+
+        return context
