@@ -2,6 +2,19 @@
 {% extends 'mini_insta/base.html' %}
 
 {% block content %}
+{% if request.user.is_authenticated %}
+<h1>Your Profile</h1>
+<a href="{% url 'show_profile' logged_in_user.pk %}" class="link">
+    <div class="profile">
+        <img src='{{logged_in_user.profile_image_url}}'>
+        <div class="name">
+            <h2>{{logged_in_user.display_name}}</h3>
+            <h3>{{logged_in_user.username}}</h3>
+        </div class="name">
+    </div class="profile">
+</a>
+{% endif %}
+
 <h1>Showing all profiles</h1>
 <!--Displays each profile's username, display name, and profile image-->
 {% for profile in profiles %}

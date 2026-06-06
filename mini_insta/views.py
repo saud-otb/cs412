@@ -8,14 +8,36 @@ from django.urls import reverse
 from .models import Profile, Post, Photo
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .forms import CreatePostForm, UpdateProfileForm, UpdatePostForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
-class ProfileListView(ListView):
+class MyLoginRequiredMixin(LoginRequiredMixin):
+
+    def get_login_url(self):
+        return reverse('login')
+    
+    def get_logged_in_user(self):
+        return Profile.objects.get(user=self.request.user)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['logged_in_user'] = self.get_logged_in_user()
+        return context
+    
+class ProfileListView(ListView, MyLoginRequiredMixin):
     '''Displays a list of all profiles.'''
 
     model = Profile
     template_name = 'mini_insta/show_all.html'
     context_object_name = 'profiles'
+
+    def get_context_data(self):
+        context = super().get_context_data()
+
+        if self.request.user.is_authenticated:
+            context["logged_in_user"] = self.get_logged_in_user()
+
+        return context
 
 class ProfileDetailView(DetailView):
     '''Displays the detail page for one profile.'''
@@ -24,6 +46,7 @@ class ProfileDetailView(DetailView):
     template_name = 'mini_insta/show_profile.html'
     context_object_name = 'profile'
 
+
 class PostDetailView(DetailView):
     '''Displays the detail page for one post'''
 
@@ -31,7 +54,7 @@ class PostDetailView(DetailView):
     template_name = 'mini_insta/show_post.html'
     context_object_name = 'post'
 
-class CreatePostView(CreateView):
+class CreatePostView(MyLoginRequiredMixin, CreateView):
     '''Handles the creation of a post. 
         1. Displays the HTML form to the user
         2. Proccess the form submission and stores the new Post object'''
@@ -47,8 +70,7 @@ class CreatePostView(CreateView):
         context = super().get_context_data()
 
         # Finds the profile using the primary key, stores it in the context dictionary
-        pk = self.kwargs['pk']
-        profile = Profile.objects.get(pk=pk)
+        profile = self.get_logged_in_user()
         context['profile'] = profile
 
         return context
@@ -57,7 +79,7 @@ class CreatePostView(CreateView):
         """Returns the page to redirect to after the form is submitted successfully."""
 
         # Redirects to the original profile
-        pk = self.kwargs['pk']
+        pk = self.get_logged_in_user().pk
         return reverse('show_profile', kwargs={'pk':pk})
 
     def form_valid(self, form):
@@ -65,8 +87,7 @@ class CreatePostView(CreateView):
 
 
         # retrieve the PK from the URL pattern
-        pk = self.kwargs['pk']
-        profile = Profile.objects.get(pk=pk)
+        profile = self.get_logged_in_user()
         form.instance.profile = profile  # attach this post to the profile
 
         # image_url = self.request.POST['image_url']
@@ -89,14 +110,18 @@ class CreatePostView(CreateView):
         return response
     
 
-class UpdateProfileView(UpdateView):
+class UpdateProfileView(MyLoginRequiredMixin, UpdateView):
     '''Displays the HTML form to the user to update their profile and handles the form submission'''
     model = Profile
     form_class = UpdateProfileForm
     template_name = 'mini_insta/update_profile_form.html'
 
+    def get_object(self):
+        return self.get_logged_in_user()
+    
 
-class DeletePostView(DeleteView):
+
+class DeletePostView(MyLoginRequiredMixin, DeleteView):
     '''Displays the HTML form to the user to delete their post and handles the form submission'''
     model = Post
     template_name = 'mini_insta/delete_post_form.html'
@@ -124,7 +149,8 @@ class DeletePostView(DeleteView):
         profile = post.profile
         return reverse('show_profile', kwargs={'pk':profile.pk})
     
-class UpdatePostView(UpdateView):
+    
+class UpdatePostView(MyLoginRequiredMixin, UpdateView):
     '''Displays the HTML form to the user to update their post and handles the form submission'''
     model = Post
     form_class = UpdatePostForm
@@ -150,13 +176,16 @@ class ShowFollowingDetailView(DetailView):
     template_name = 'mini_insta/show_following.html'
     context_object_name = 'profile'
 
-class ShowFeedView(DetailView):
+class ShowFeedView(MyLoginRequiredMixin, DetailView):
     '''Displays a list of posts from all the profiles that the user is following'''
     model = Profile
     template_name = 'mini_insta/show_feed.html'
     context_object_name = 'profile'
 
-class SearchView(ListView):
+    def get_object(self):
+        return self.get_logged_in_user()
+    
+class SearchView(MyLoginRequiredMixin, ListView):
     '''Displays an HTML form for the user to search profiles and posts, and handles the form submission'''
     model = Profile
     template_name = 'mini_insta/search_results.html'
@@ -165,8 +194,7 @@ class SearchView(ListView):
     def dispatch(self, request, *args, **kwargs):
         
         if 'query' not in self.request.GET:
-            pk = self.kwargs['pk']
-            profile = Profile.objects.get(pk=pk)
+            profile = self.get_logged_in_user()
             context = {'profile': profile}
 
             return render(request, 'mini_insta/search.html', context)
@@ -181,8 +209,8 @@ class SearchView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
 
-        pk = self.kwargs['pk']
-        profile = Profile.objects.get(pk=pk)
+
+        profile = self.get_logged_in_user()
 
         query = ""
         if 'query' in self.request.GET:
@@ -196,3 +224,7 @@ class SearchView(ListView):
         context['posts'] = self.get_queryset()
 
         return context
+
+def logout_page(request):
+    template_name = 'mini_insta/logout.html'
+    return render(request, template_name)

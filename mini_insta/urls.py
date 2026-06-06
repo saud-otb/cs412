@@ -6,16 +6,22 @@ from django.urls import path
 from django.conf import settings
 # from .views import ProfileListView, ProfileDetailView, PostDetailView, CreatePostView, UpdateProfileView, DeletePostView, UpdatePostView
 from .views import *
+from django.contrib.auth import views as auth_views 
+
 urlpatterns = [
     path(r'', ProfileListView.as_view(), name='show_all_profiles'),
     path(r'<int:pk>/', ProfileDetailView.as_view(), name='show_profile'),
     path(r'post/<int:pk>/', PostDetailView.as_view(), name='show_post'),
-    path(r'profile/<int:pk>/create_post', CreatePostView.as_view(), name='create_post'),
-    path(r'profile/<int:pk>/update', UpdateProfileView.as_view(), name='update_profile'),
+    path(r'profile/create_post', CreatePostView.as_view(), name='create_post'),
+    path(r'profile/update', UpdateProfileView.as_view(), name='update_profile'),
     path(r'post/<int:pk>/delete', DeletePostView.as_view(), name='delete_post'),
     path(r'post/<int:pk>/update', UpdatePostView.as_view(), name='update_post'),
     path(r'profile/<int:pk>/followers', ShowFollowersDetailView.as_view(), name='show_followers'),
     path(r'profile/<int:pk>/following', ShowFollowingDetailView.as_view(), name='show_following'),
-    path(r'profile/<int:pk>/feed', ShowFeedView.as_view(), name='show_feed'),
-    path(r'profile/<int:pk>/search', SearchView.as_view(), name="search_results")
+    path(r'profile/feed', ShowFeedView.as_view(), name='show_feed'),
+    path(r'profile/search', SearchView.as_view(), name="search_results"),
+    path(r'login/', auth_views.LoginView.as_view(template_name='mini_insta/login.html'), name='login'),
+    path(r'logout_page', logout_page, name='logout_page'),
+    path(r'logout/', auth_views.LogoutView.as_view(next_page='mini_insta/show_all.html'), name='logout'),
+    path(r'profile', ProfileDetailView.as_view(), name='logged_in_profile'),
 ]

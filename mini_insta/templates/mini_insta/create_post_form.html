@@ -4,7 +4,7 @@
 {% block content %}
 <div class="create-post-form">
     <!--Form for creating a post and uploading photos-->
-    <form action="{% url 'create_post' profile.pk %}" method="POST" enctype="multipart/form-data">
+    <form action="{% url 'create_post' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <table>
             {{form.as_table}}

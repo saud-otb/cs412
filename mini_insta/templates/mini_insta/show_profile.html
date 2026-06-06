@@ -9,7 +9,9 @@
 <div class="top-header">
     <img src="{{profile.profile_image_url}}">
     <h1>{{profile.display_name}}</h1>
-    <a href="{% url 'update_profile' profile.pk %}" id="update-button">Update Profile</a>
+    {% if request.user.is_authenticated and request.user == profile.user %}
+        <a href="{% url 'update_profile' %}" id="update-button">Update Profile</a>
+    {% endif %}
 </div>
     <!--Displays the profile information-->
     <div class="profile-information">
@@ -39,7 +41,9 @@
             <a href="{% url 'show_post' post.pk %}">See Post</a>
         </div>
     {% endfor %}
-    <a href="{% url 'create_post' profile.pk %}" id="create_post">Create Post</a>
+    {% if request.user.is_authenticated and request.user == profile.user %}
+        <a href="{% url 'create_post' %}" id="create_post">Create Post</a>
+    {% endif %}
     <footer>
         <nav>
             <a href="{% url 'show_all_profiles' %}"><img src="https://www.svgrepo.com/show/114939/go-back-arrow.svg"></a>
