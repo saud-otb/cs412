@@ -1,0 +1,25 @@
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h1>Create User Account</h1>
+    <table>
+        {{user_form.as_table}}
+    </table>
+    <br>
+    <h1>Create Profile</h1>
+    <table>
+        {{form.as_table}}
+    </table>
+    <!--Submit and cancel buttons-->
+    <div class="form-buttons">
+        <input type="submit" name="submit" value="Submit">
+        <a href="{% url 'show_all_profiles' %}" id="cancel-button" class="button">Cancel</a>
+    </div>
+</form>
+<footer>
+        <nav>
+            <a href="{% url 'show_all_profiles' %}"><img src="https://www.svgrepo.com/show/114939/go-back-arrow.svg"></a>
+        </nav>
+{% endblock %}

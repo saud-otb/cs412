@@ -24,6 +24,14 @@
                 <p>{{post.get_likes}}</p>
             </div>
             <br>
+             {% if request.user.is_authenticated and logged_in_user != post.profile %}
+                {% if has_liked %}
+                    <a href="{% url 'delete_like_post' post.pk %}" class="button">Remove Like</a>
+                {% else %}
+                    <a href="{% url 'like_post' post.pk %}" class="button">Like</a>
+                {% endif %}
+            {% endif %}
+            <br>
             <!--Shows all the comments on a post, the commenter's username, the timestamp, and the text--> 
             <h2>Comments: </h2>
             {% for comment in post.get_all_comments %}

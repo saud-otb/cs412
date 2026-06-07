@@ -5,11 +5,12 @@
 
 from django.shortcuts import render
 from django.urls import reverse
-from .models import Profile, Post, Photo
+from .models import Profile, Post, Photo, Follower, Likes
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .forms import CreatePostForm, UpdateProfileForm, UpdatePostForm
+from .forms import CreatePostForm, UpdateProfileForm, UpdatePostForm, CreateProfileForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 # Create your views here.
 class MyLoginRequiredMixin(LoginRequiredMixin):
 
@@ -39,20 +40,49 @@ class ProfileListView(ListView, MyLoginRequiredMixin):
 
         return context
 
-class ProfileDetailView(DetailView):
+class ProfileDetailView(DetailView, MyLoginRequiredMixin):
     '''Displays the detail page for one profile.'''
 
     model = Profile
     template_name = 'mini_insta/show_profile.html'
     context_object_name = 'profile'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
-class PostDetailView(DetailView):
+        if self.request.user.is_authenticated:
+            logged_in_profile = self.get_logged_in_user()
+
+            follows = Follower.objects.filter(profile=self.object, follower_profile=logged_in_profile)
+
+            if len(follows) == 0:
+                context["is_following"] = False
+            else:
+                context["is_following"] = True
+
+        return context
+
+class PostDetailView(DetailView, MyLoginRequiredMixin):
     '''Displays the detail page for one post'''
 
     model = Post
     template_name = 'mini_insta/show_post.html'
     context_object_name = 'post'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        if self.request.user.is_authenticated:
+            logged_in_user = self.get_logged_in_user()
+
+            likes = Likes.objects.filter(profile=logged_in_user, post=self.object)
+
+            if len(likes) == 0:
+                context["has_liked"] = False
+            else:
+                context["has_liked"] = True
+
+        return context
 
 class CreatePostView(MyLoginRequiredMixin, CreateView):
     '''Handles the creation of a post. 
@@ -228,3 +258,93 @@ class SearchView(MyLoginRequiredMixin, ListView):
 def logout_page(request):
     template_name = 'mini_insta/logout.html'
     return render(request, template_name)
+
+class CreateProfileView(CreateView):
+
+    form_class = CreateProfileForm
+    template_name = 'mini_insta/create_profile_form.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_form'] = UserCreationForm
+
+        return context
+
+    def form_valid(self, form):
+        user_form = UserCreationForm(self.request.POST)
+
+        user = user_form.save()
+
+        login(self.request, user, backend='django.contrib.auth.backends.ModelBackend')
+
+        form.instance.user = user
+
+        return super().form_valid(form)
+    
+
+class FollowProfileView(ProfileDetailView):
+    """Allows the logged-in profile to follow another profile."""
+
+    def dispatch(self, request, *args, **kwargs):
+
+        if not request.user.is_authenticated:
+            return super().dispatch(request, *args, **kwargs)
+
+        profile = Profile.objects.get(pk=self.kwargs["pk"])
+        logged_in_user = self.get_logged_in_user()
+
+        Follower.objects.create(profile=profile, follower_profile=logged_in_user)
+
+        return super().dispatch(request, *args, **kwargs)
+
+
+class DeleteFollowView(ProfileDetailView):
+    """Allows the logged-in profile to unfollow another profile."""
+
+    def dispatch(self, request, *args, **kwargs):
+
+        if not request.user.is_authenticated:
+            return super().dispatch(request, *args, **kwargs)
+
+        profile = Profile.objects.get(pk=self.kwargs["pk"])
+        logged_in_user = self.get_logged_in_user()
+
+        follow = Follower.objects.get(profile=profile, follower_profile=logged_in_user)
+
+        follow.delete()
+
+        return super().dispatch(request, *args, **kwargs)
+
+
+class LikePostView(PostDetailView):
+    """Allows the logged-in profile to like a post."""
+
+    def dispatch(self, request, *args, **kwargs):
+
+        if not request.user.is_authenticated:
+            return super().dispatch(request, *args, **kwargs)
+
+        post = Post.objects.get(pk=self.kwargs["pk"])
+        logged_in_user = self.get_logged_in_user()
+
+        Likes.objects.create(profile=logged_in_user, post=post)
+
+        return super().dispatch(request, *args, **kwargs)
+
+
+class DeleteLikeView(PostDetailView):
+    """Removes the logged-in profile's like from a post."""
+
+    def dispatch(self, request, *args, **kwargs):
+
+        if not request.user.is_authenticated:
+            return super().dispatch(request, *args, **kwargs)
+
+        post = Post.objects.get(pk=self.kwargs["pk"])
+        logged_in_user = self.get_logged_in_user()
+
+        like = Likes.objects.get(profile=logged_in_user, post=post)
+
+        like.delete()
+
+        return super().dispatch(request, *args, **kwargs)

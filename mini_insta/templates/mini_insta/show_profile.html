@@ -26,6 +26,14 @@
     <a href="{% url 'show_following' profile.pk %}" class="button">See Following</a>
     <h2>{{profile.bio_text}}</h2>
 
+    {% if request.user.is_authenticated and logged_in_user != profile %}
+        {% if is_following %}
+            <a href="{% url 'delete_follow_profile' profile.pk %}" class="button">Unfollow</a>
+        {% else %}
+            <a href="{% url 'follow_profile' profile.pk %}" class="button">Follow</a>
+        {% endif %}
+    {% endif %}
+
     <h1>Posts</h1>
     {% for post in profile.get_all_posts %}
         <!--Displays all posts created by this profile-->
