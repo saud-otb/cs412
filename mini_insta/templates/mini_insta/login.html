@@ -1,15 +1,18 @@
+<!--Displays the login form and allows an existing user to authenticate.-->
 {% extends 'mini_insta/base.html' %}
- 
- 
+
 {% block content %} 
 <h1>Login</h1>
 <form action="{% url 'login' %}" method="POST">
     {% csrf_token %}
+    <!--Displays the form-->
     {{form}}
     <input type="submit" value="Login">
     {% if request.GET.next %}
+        <!--Redirects the user to the page they were trying to access.-->
         <input type="hidden" name="next" value="{{request.GET.next}}">
     {% else %}
+        <!--If not, it redirects them to the show all profiles page.-->
         <input type="hidden" name="next" value="{% url 'show_all_profiles' %}">
     {% endif %}
 </form>

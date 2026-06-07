@@ -51,9 +51,10 @@ class ProfileDetailView(DetailView, MyLoginRequiredMixin):
         context = super().get_context_data(**kwargs)
 
         if self.request.user.is_authenticated:
-            logged_in_profile = self.get_logged_in_user()
+            logged_in_user = self.get_logged_in_user()
+            context['logged_in_user'] = logged_in_user
 
-            follows = Follower.objects.filter(profile=self.object, follower_profile=logged_in_profile)
+            follows = Follower.objects.filter(profile=self.object, follower_profile=logged_in_user)
 
             if len(follows) == 0:
                 context["is_following"] = False
@@ -74,6 +75,7 @@ class PostDetailView(DetailView, MyLoginRequiredMixin):
 
         if self.request.user.is_authenticated:
             logged_in_user = self.get_logged_in_user()
+            context['logged_in_user'] = logged_in_user
 
             likes = Likes.objects.filter(profile=logged_in_user, post=self.object)
 
@@ -256,11 +258,12 @@ class SearchView(MyLoginRequiredMixin, ListView):
         return context
 
 def logout_page(request):
+    '''Renders the logout confirmation page to the user'''
     template_name = 'mini_insta/logout.html'
     return render(request, template_name)
 
 class CreateProfileView(CreateView):
-
+    '''Displays a form to the user to create their user account and profile.'''
     form_class = CreateProfileForm
     template_name = 'mini_insta/create_profile_form.html'
 
@@ -283,7 +286,7 @@ class CreateProfileView(CreateView):
     
 
 class FollowProfileView(ProfileDetailView):
-    """Allows the logged-in profile to follow another profile."""
+    """Allows the logged in profile to follow another profile."""
 
     def dispatch(self, request, *args, **kwargs):
 
@@ -299,7 +302,7 @@ class FollowProfileView(ProfileDetailView):
 
 
 class DeleteFollowView(ProfileDetailView):
-    """Allows the logged-in profile to unfollow another profile."""
+    """Allows the logged in profile to unfollow another profile."""
 
     def dispatch(self, request, *args, **kwargs):
 
@@ -308,7 +311,7 @@ class DeleteFollowView(ProfileDetailView):
 
         profile = Profile.objects.get(pk=self.kwargs["pk"])
         logged_in_user = self.get_logged_in_user()
-
+        
         follow = Follower.objects.get(profile=profile, follower_profile=logged_in_user)
 
         follow.delete()
@@ -317,7 +320,7 @@ class DeleteFollowView(ProfileDetailView):
 
 
 class LikePostView(PostDetailView):
-    """Allows the logged-in profile to like a post."""
+    """Allows the logged in profile to like a post."""
 
     def dispatch(self, request, *args, **kwargs):
 
@@ -333,7 +336,7 @@ class LikePostView(PostDetailView):
 
 
 class DeleteLikeView(PostDetailView):
-    """Removes the logged-in profile's like from a post."""
+    """Removes the logged in profile's like from a post."""
 
     def dispatch(self, request, *args, **kwargs):
 

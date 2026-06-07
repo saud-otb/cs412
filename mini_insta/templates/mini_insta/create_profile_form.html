@@ -1,14 +1,17 @@
+<!--Displays the forms used to create a new Django user and profile.-->
 {% extends 'mini_insta/base.html' %}
 
 {% block content %}
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <h1>Create User Account</h1>
+    <!--Displays the form to create a user-->
     <table>
         {{user_form.as_table}}
     </table>
     <br>
     <h1>Create Profile</h1>
+    <!--Displays the form to create a profile-->
     <table>
         {{form.as_table}}
     </table>
