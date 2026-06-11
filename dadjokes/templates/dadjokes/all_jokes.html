@@ -1,0 +1,14 @@
+{% extends 'dadjokes/base.html' %}
+
+{% block content %}
+    {% for joke in jokes %}
+       <div class="joke">
+        <a href="{% url 'joke' joke.pk %}" class="joke-link">
+            <h2>Contributor: {{joke.contributor}}</h2>
+            <p>{{joke.text}}</p>
+            <p>{{joke.timestamp}}</p>
+        </a>
+        </div>
+        <hr>
+    {% endfor %}
+{% endblock %}

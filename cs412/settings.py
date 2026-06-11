@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'quotes', # Assignment 1
     'restaurant', # Assignment 2
     'mini_insta', # Assignment 3
+    'rest_framework',
+    'dadjokes',
 ]
 
 MIDDLEWARE = [
@@ -136,3 +138,8 @@ CS_DEPLOYMENT_HOSTNAME = 'cs-webapps.bu.edu'
 if socket.gethostname() == CS_DEPLOYMENT_HOSTNAME:
     STATIC_URL = '/saud665/static/'
     MEDIA_URL = '/saud665/media/'
+
+REST_FRAMEWORK = {
+  'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+  'PAGE_SIZE': 10
+}

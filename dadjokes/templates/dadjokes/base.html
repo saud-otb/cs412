@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Dad Jokes</title>
+        <link rel="stylesheet" href="{% static 'dadjokes/style.css' %}">
+    </head>
+    <body>
+        <nav>
+            <a href="{% url 'random_joke' %}">Random Joke</a>
+            <a href="{% url 'all_jokes' %}">All jokes</a>
+            <a href="{% url 'all_pictures' %}">All pictures</a>
+        </nav>
+
+        {% block content %}
+        {% endblock %}
+    </body>
+</html>

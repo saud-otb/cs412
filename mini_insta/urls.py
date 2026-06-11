@@ -4,7 +4,6 @@
 
 from django.urls import path
 from django.conf import settings
-# from .views import ProfileListView, ProfileDetailView, PostDetailView, CreatePostView, UpdateProfileView, DeletePostView, UpdatePostView
 from .views import *
 from django.contrib.auth import views as auth_views 
 
