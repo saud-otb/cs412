@@ -1,8 +1,11 @@
+<!-- Displays one Picture object, including its image and the name of its contributor.-->
 {% extends 'dadjokes/base.html' %}
 
 {% block content %}
     <div class="picture">
+        <!-- Displays the image.-->
         <img src="{{picture.image_url}}">
+        <!-- Displays the contributor of the image.-->
         <p>Contributor: {{picture.contributor}}</p>
     </div>
     <hr>

@@ -1,9 +1,13 @@
+<!--Displays one Joke object, including the joke text and the name of its contributor.-->
 {% extends 'dadjokes/base.html' %}
 
 {% block content %}
 <div class="joke">
+        <!-- Displays the contributor of the joke. -->
         <h2>Contributor: {{joke.contributor}}</h2>
+        <!-- Displays the joke text. -->
         <p>{{joke.text}}</p>
+        <!-- Displays when the joke was created-->
         <p>{{joke.timestamp}}</p>
     </div>
 {% endblock %}

@@ -1,8 +1,11 @@
+<!--Displays all Joke objects retrieved from the database, including each text and its contributor.-->
 {% extends 'dadjokes/base.html' %}
 
 {% block content %}
+    <!--Loops through every joke-->
     {% for joke in jokes %}
        <div class="joke">
+        <!--Displays the text and it's contributor-->
         <a href="{% url 'joke' joke.pk %}" class="joke-link">
             <h2>Contributor: {{joke.contributor}}</h2>
             <p>{{joke.text}}</p>

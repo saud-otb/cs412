@@ -1,8 +1,11 @@
+<!--Displays all Picture objects retrieved from the database, including each image and its contributor.-->
 {% extends 'dadjokes/base.html' %}
 
 {% block content %}
+    <!--Loops through every Picture.-->
     {% for picture in pictures %}
         <div class="picture">
+            <!--Displays each image, its contributor, and when it was created.-->
             <a href="{% url 'picture' picture.pk %}">
                 <img src="{{picture.image_url}}" class="picture-link">
                 <p>Contributor: {{picture.contributor}}</p>

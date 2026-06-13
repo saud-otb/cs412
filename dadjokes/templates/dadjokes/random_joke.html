@@ -1,7 +1,11 @@
+<!--Displays one randomly selected Joke object and one randomly selected Picture object
+, including the joke text and it's contributor, and the picture and its contributor.-->
+
 {% extends 'dadjokes/base.html' %}
 
 {% block content %}
     <h1>Random Joke</h1>
+    <!--Displays the joke.-->
     <div class="joke">
         <a href="{% url 'joke' joke.pk %}" class="joke-link">
             <h2>Contributor: {{joke.contributor}}</h2>
@@ -10,6 +14,7 @@
         </a>
     </div>
 
+    <!--Displays the image.-->
     <div class="picture">
         <a href="{% url 'picture' picture.pk %}">
         <img src="{{picture.image_url}}" class="picture-link">

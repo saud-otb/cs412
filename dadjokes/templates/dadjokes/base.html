@@ -1,3 +1,5 @@
+<!--Defines the base template and navigation used by all pages in the Dad Jokes application.-->
+
 {% load static %}
 <!DOCTYPE html>
 <html>
@@ -6,6 +8,7 @@
         <link rel="stylesheet" href="{% static 'dadjokes/style.css' %}">
     </head>
     <body>
+        <!-- Navigation links for the application. -->
         <nav>
             <a href="{% url 'random_joke' %}">Random Joke</a>
             <a href="{% url 'all_jokes' %}">All jokes</a>
