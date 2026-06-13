@@ -1,3 +1,10 @@
+
+# File: urls.py
+# Author: Saud Alotaibi
+# Description: Defines the URL patterns for the Dad Jokes application,
+# including HTML pages and REST API endpoints for Jokes and Pictures.
+
+
 from django.urls import path
 from django.conf import settings
 from .views import *

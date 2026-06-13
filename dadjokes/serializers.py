@@ -1,3 +1,9 @@
+# File: serializers.py 
+# Author: Saud Alotaibi
+# Description: Defines serializers that convert Joke and Picture objects between Django model instances 
+# and JSON data used by the REST API.
+
+
 from rest_framework import serializers
 from .models import *
  
