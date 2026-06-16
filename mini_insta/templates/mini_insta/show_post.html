@@ -3,7 +3,19 @@
 {% extends 'mini_insta/base.html' %}
 
 {% block content %}
+<br>
+<a class="button" href="{% url 'show_profile' post.profile.pk %}">
+    ← Back to {{ post.profile.username }}'s profile
+</a>
+
+<br> <br>
+ {% if request.user.is_authenticated and request.user == post.profile.user %}
+    <a href="{% url 'delete_post' post.pk %}" class="button">Delete Post</a>
+    <a href="{% url 'update_post' post.pk %}" class="button">Update Post</a>
+{% endif %}
+
     <div class="detail_post">
+
         <!--Displays the selected post and its photos-->
         <h1>{{post.caption}}</h1>
         <h3>Created at time {{post.timestamp}}</h3>
@@ -39,15 +51,6 @@
                 <p>Created at time {{comment.timestamp}}</p>
                 <p>{{comment.text}}</p>
             {% endfor %}
-            {% if request.user.is_authenticated and request.user == post.profile.user %}
-                <a href="{% url 'delete_post' post.pk %}" class="button">Delete Post</a>
-                <a href="{% url 'update_post' post.pk %}" class="button">Update Post</a>
-            {% endif %}
     </div>
 
-    <footer>
-        <nav>
-            <a href="{% url 'show_profile' post.profile.pk %}"><img src="https://www.svgrepo.com/show/114939/go-back-arrow.svg"></a>
-        </nav>
-    </footer>
 {% endblock %}

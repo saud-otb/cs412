@@ -8,35 +8,23 @@ used by all templates. -->
          <link rel="stylesheet" href="{% static 'mini_insta/style.css' %}">
     </head>
     <body>
-        <header>
-            <h1 id="main-header">Mini Insta</h1>
-            <nav>
+        <header class="site-header">
+            <h1>Mini Insta</h1>
+
+            <nav class="main_nav">
+                <a href="{% url 'show_all_profiles' %}">All Profiles</a>
                 {% if request.user.is_authenticated %}
-                    <p>Logged in as: {{request.user}}</p>
-                    <br>
-                    <a href="{% url 'logout_page' %}">Logout</a>
+                    <a href="{% url 'show_feed' %}" class="nav-button">Feed</a>
+                    <a href="{% url 'search_results' %}" class="nav-button">Search</a>
+                    <a href="{% url 'logout_page' %}" class="nav-button">Logout</a>
                 {% else %}
-                    <p>Not logged in</p>
-                    <br>
-                    <a href="{% url 'login' %}">Login</a>
+                    <a href="{% url 'login' %}" class="nav-button">Login</a>
                 {% endif %}
             </nav>
         </header>
-        {% block content %}
-        {% endblock %}
-        <footer>
-            <nav>
-                <div class="navigation-icons">
-                {% if profile.pk %}
-                    {% if request.user.is_authenticated and request.user == profile.user %}
-                        <a href="{% url 'show_feed' %}"><img src="https://cdn-icons-png.flaticon.com/512/3386/3386036.png" id="home"></a>
-                        <a href="{% url 'search_results' %}"><img src="https://static.thenounproject.com/png/3255265-200.png" id="search-icon"></a>
-                    {% endif %}
-                {% else %}
-                    <a href="{% url 'show_all_profiles' %}"><img src="https://cdn-icons-png.flaticon.com/512/3386/3386036.png" id="home"></a>
-                {% endif %}
-                </div>
-            </nav>
-        </footer>
+        <main class="page-content">
+            {% block content %}
+            {% endblock %}
+        </main>
     </body>
 </html>

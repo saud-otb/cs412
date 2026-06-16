@@ -4,7 +4,12 @@
 {% extends 'mini_insta/base.html' %}
 
 {% block content %}
-<h3>{{profile.username}}</h3>
+<br>
+<a class="button" href="{% url 'show_all_profiles' %}">
+    ← Back to profiles
+</a>
+
+<h3 id="profile-username">{{profile.username}}</h3>
 
 <div class="top-header">
     <img src="{{profile.profile_image_url}}">
@@ -17,13 +22,12 @@
     <div class="profile-information">
         <div class="profile-stats">   <p>Posts</p> <p>TBD</p> </div>
         
-        <div class="profile-stats"> <p>Followers</p> <p>{{profile.get_num_followers}}</p></div>
+        <div class="profile-stats"><a href="{% url 'show_followers' profile.pk %}"> <p>Followers</p> <p>{{profile.get_num_followers}}</p> </a></div>
 
-        <div class="profile-stats">  <p>Following</p> <p>{{profile.get_num_following}}</p></div>
+        <div class="profile-stats"><a href="{% url 'show_following' profile.pk %}"> <p>Following</p> <p>{{profile.get_num_following}}</p> </a></div>
     </div>
     
-    <a href="{% url 'show_followers' profile.pk %}" class="button">See Followers</a>
-    <a href="{% url 'show_following' profile.pk %}" class="button">See Following</a>
+
     <h2>{{profile.bio_text}}</h2>
 
     {% if request.user.is_authenticated and logged_in_user != profile %}
@@ -35,6 +39,10 @@
     {% endif %}
 
     <h1>Posts</h1>
+    {% if request.user.is_authenticated and request.user == profile.user %}
+        <a href="{% url 'create_post' %}" id="create_post">Create Post</a>
+    {% endif %}
+
     {% for post in profile.get_all_posts %}
         <!--Displays all posts created by this profile-->
         <div class="profile-post">
@@ -49,13 +57,4 @@
             <a href="{% url 'show_post' post.pk %}">See Post</a>
         </div>
     {% endfor %}
-    {% if request.user.is_authenticated and request.user == profile.user %}
-        <a href="{% url 'create_post' %}" id="create_post">Create Post</a>
-    {% endif %}
-    <footer>
-        <nav>
-            <a href="{% url 'show_all_profiles' %}"><img src="https://www.svgrepo.com/show/114939/go-back-arrow.svg"></a>
-        </nav>
-    </footer>
-     
 {% endblock %}

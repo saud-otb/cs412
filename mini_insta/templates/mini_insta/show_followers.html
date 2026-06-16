@@ -3,6 +3,12 @@
 {% extends 'mini_insta/base.html' %}
 
 {% block content %}
+<br>
+<a class="button" href="{% url 'show_profile' profile.pk %}">
+    ← Back to {{ profile.username }}'s profile
+</a>
+
+
 <h1>You're Followed By:</h1>
 {% for following in profile.get_followers %}
 <!--Displays all followers of this profile-->
@@ -16,9 +22,5 @@
     </div>
 </a>
 {% endfor %}
-<footer>
-        <nav>
-            <a href="{% url 'show_profile' profile.pk %}"><img src="https://www.svgrepo.com/show/114939/go-back-arrow.svg"></a>
-        </nav>
-    </footer>
+
 {% endblock %}
