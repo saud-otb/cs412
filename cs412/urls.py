@@ -26,6 +26,7 @@ urlpatterns = [
     path('restaurant/', include('restaurant.urls')),
     path('mini_insta/', include('mini_insta.urls')),
     path('dadjokes/', include('dadjokes.urls')),
+    path('game_review/', include('game_review.urls')),
 ] 
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

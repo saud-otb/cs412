@@ -1,0 +1,25 @@
+{% extends 'game_review/base.html' %}
+
+{% block content %}
+    <h1>{{game.title}}</h1>
+    <h3>Developer: {{game.developer}}</h3>
+    <h3>Publisher: {{game.publisher}}</h3>
+    <h3>Released in: {{game.release_date}}</h3>
+    <h3>Description: </h3>
+    <p>{{game.description}}</p>
+
+    <h2>Reviews:</h2>
+    {% if reviews %}
+        {% for review in reviews %}
+        <div>
+            <h3>{{ review.review_title }}</h3>
+            <p>Rating: {{ review.rating }}/10</p>
+            <p>{{ review.review_text }}</p>
+            <p>Recommended: {{ review.recommended }}</p>
+            <p>By: {{ review.game_library_entry.profile }}</p>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No reviews yet.</p>
+    {% endif %}
+{% endblock %}

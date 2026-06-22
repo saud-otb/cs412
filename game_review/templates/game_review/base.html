@@ -1,0 +1,28 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Game Review</title>
+        <link rel="stylesheet" href="{% static 'game_review/style.css' %}">
+    </head>
+    <body>
+
+        <header class="site-title">
+            <h1>Game Review</h1>
+            <h3>The Best Place to Track and Review Video Games</h2>
+            <nav class="nav-bar">
+                <a href="{% url 'home_page' %}"> <p>Show All Genres</p>  </a>
+                <a href="{% url 'show_all_profiles' %}"> <p>Show All Profiles</p>   </a>
+                <a href="{% url 'show_all_games' %}"> <p>Show All Games</p> </a>
+            </nav>
+        </header>
+        <hr>
+
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+
+    </body>
+</html>

@@ -1,0 +1,11 @@
+{% extends 'game_review/base.html' %}
+
+{% block content %}
+    <ul>
+        {% for game in games %}
+            <a href="{% url 'show_video_game' game.pk %}"><li>{{game.title}}</li></a>
+            <p>{{game.description}}</p>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

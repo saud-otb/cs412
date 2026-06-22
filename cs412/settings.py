@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'mini_insta', # Assignment 3
     'rest_framework',
     'dadjokes',
+    'game_review',
 ]
 
 MIDDLEWARE = [

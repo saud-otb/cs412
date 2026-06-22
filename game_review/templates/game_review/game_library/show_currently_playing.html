@@ -1,0 +1,16 @@
+{% extends 'game_review/base.html' %}
+
+{% block content %}
+ <h1>Currently Playing: </h1>
+    {% if entries %}
+        {% for entry in entries %}
+            <div>
+                <a href="{% url 'show_video_game' entry.video_game.pk %}"><h2>{{ entry.video_game.title }}</h2></a>
+                <p>{{ entry.video_game.description }}</p>
+                <p>Added: {{ entry.date_added }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No games in this list yet.</p>
+    {% endif %}
+{% endblock  %}

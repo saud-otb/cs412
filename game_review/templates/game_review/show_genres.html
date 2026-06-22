@@ -1,0 +1,11 @@
+{% extends 'game_review/base.html' %}
+
+{% block content %}
+    <h2>Explore Games in your Favorite Genres</h3>
+    <ul class="list-genre">
+        {% for genre in genres %}
+            <a href="{% url 'show_genre_games' genre.pk %}"> <li>{{genre}}</li>  </a>
+            <p>{{genre.description}}</p>
+        {% endfor %}
+    </ul>
+{% endblock %}

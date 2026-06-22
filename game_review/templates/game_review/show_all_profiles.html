@@ -1,0 +1,11 @@
+{% extends 'game_review/base.html' %}
+
+{% block content %}
+    <h2>Showing All Profiles</h2>
+    <ul>
+        {% for profile in profiles %}
+           <a href="{% url 'show_profile' profile.pk %}"> <li>{{profile.display_name}}</li> </a>
+            <p>{{profile.bio}}</p>
+        {% endfor %}
+    </ul>
+{% endblock %}

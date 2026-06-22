@@ -1,0 +1,14 @@
+{% extends 'game_review/base.html' %}
+
+{% block content %}
+    <h2>{{profile.display_name}}</h3>
+    <p>{{profile.bio}}</p>
+    <p>Joined in: {{profile.date_created}}</p>
+
+    <h3>Game Library</h3>
+    <ul>
+        <a href="{% url 'want_to_play' profile.pk %}"> <li>Want to Play</li> </a>
+        <a href="{% url 'currently_playing' profile.pk %}"> <li>Currently Playing</li> </a>
+        <a href="{% url 'played' profile.pk %}"> <li>Played</li> </a>
+    </ul>
+{% endblock %}
