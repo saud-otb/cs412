@@ -54,4 +54,4 @@ desktop.ini
 # Coverage reports
 htmlcov/
 .coverage
-.coverage.*
+.coverage.*db.sqlite3 
