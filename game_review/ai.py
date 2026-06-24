@@ -9,7 +9,6 @@ except Exception:
     pass
 
 from django.conf import settings
-from google import genai
 
 
 def summarize_reviews(game, reviews):
@@ -18,6 +17,11 @@ def summarize_reviews(game, reviews):
     Returns an empty string if there are no reviews. Raises on API errors so
     the caller can decide how to handle failures.'''
 
+    try:
+        from google import genai
+    except ImportError:
+        return ""
+    
     if not reviews:
         return ""
 
