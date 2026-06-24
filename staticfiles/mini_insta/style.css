@@ -63,6 +63,11 @@ header {
     border-radius: 10px;
 }
 
+.profile-stats a {
+    color: inherit;
+    text-decoration: none;
+}
+
 .link {
     text-decoration: none;
     color: inherit;
@@ -329,4 +334,80 @@ input[type="submit"]:hover,
     display: flex;
     width: 20px;
     height: 20px;
+}
+
+
+.site_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 32px;
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+}
+
+.site_title {
+    color: #222;
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.main_nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.main_nav a {
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.main_nav a:hover {
+    text-decoration: underline;
+}
+
+.page_content {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.back_link {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.back_link:hover {
+    text-decoration: underline;
+}
+
+
+.site-header {
+    position: relative;
+    text-align: center;
+    padding: 15px 30px;
+    background-color: #8fd9fb;
+    border-bottom: 1px solid #ddd;
+    border-radius: 15px;
+    opacity: 90%;
+}
+
+.site-header h1 {
+    margin: 0 0 15px;
+}
+
+.main_nav {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}
+
+#profile-username {
+    text-align: center;
 }
