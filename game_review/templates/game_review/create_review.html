@@ -1,0 +1,22 @@
+{% extends 'game_review/base.html' %}
+<!-- Form to write a new review for a game the user has played. -->
+
+{% block content %}
+    <!-- only Played entries may be reviewed -->
+    {% if not_valid %}
+        <h1>You can only review a game that you have played.</h1>
+    {% else %}
+        <!-- Review form -->
+        <h1>Write a Review for {{ entry.video_game.title }}</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <table>
+                {{ form.as_table }}
+            </table>
+            <div class="form-buttons">
+                <input type="submit" value="Submit Review">
+                <a href="{% url 'show_video_game_final' entry.video_game.pk %}" class="button">Cancel</a>
+            </div>
+        </form>
+    {% endif %}
+{% endblock %}

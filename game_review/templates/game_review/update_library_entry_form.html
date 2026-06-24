@@ -1,0 +1,14 @@
+{% extends 'game_review/base.html' %}
+<!-- Form to change a library entry's play status (For example: move from Want to Play to Played). -->
+
+{% block content %}
+<!-- Update status form -->
+<form action="{% url 'update_library_entry_final' entry.pk %}" method="POST">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <input type="submit" value="Update">
+    <a class="cancel-button" href="{% url 'show_profile_final' entry.profile.pk %}">Cancel</a>
+</form>
+{% endblock %}

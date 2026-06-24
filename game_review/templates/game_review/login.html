@@ -1,0 +1,20 @@
+{% extends 'game_review/base.html' %}
+<!-- Login form with redirect after a successful login. -->
+
+{% block content %}
+<h1>Login</h1>
+<!-- Login form -->
+<form action="{% url 'login_final' %}" method="POST">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit" value="Login">
+    <!-- Hidden next redirect field, sends the user where they came from, or to their profile -->
+    {% if request.GET.next %}
+        <input type="hidden" name="next" value="{{request.GET.next}}">
+    {% else %}
+        <input type="hidden" name="next" value="{% url 'my_profile_final' %}">
+    {% endif %}
+</form>
+<!-- Register link -->
+<a href="{% url 'create_profile_final' %}" class="button">Register a New Account</a>
+{% endblock %}

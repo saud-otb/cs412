@@ -1,0 +1,20 @@
+{% extends 'game_review/base.html' %}
+<!-- Confirmation page shown before permanently deleting a review. -->
+
+{% block content %}
+    <h1>Do you want to delete this review?</h1>
+    <!-- Review preview -->
+    <div class="detail_review">
+        <h2>{{ review.review_title }}</h2>
+        <p>Rating: {{ review.rating }}/10</p>
+        <p>{{ review.review_text }}</p>
+    </div>
+    <!-- Delete confirmation form -->
+    <form action="{% url 'delete_review_final' review.pk %}" method="POST">
+        {% csrf_token %}
+        <div class="form-buttons">
+            <input type="submit" value="Delete">
+            <a href="{% url 'show_video_game_final' review.game_library_entry.video_game.pk %}" class="button">Cancel</a>
+        </div>
+    </form>
+{% endblock %}

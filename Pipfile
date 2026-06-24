@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 django = "*"
 pillow = "*"
+google-genai = "*"
+truststore = "*"
 
 [dev-packages]
 

@@ -1,11 +1,14 @@
 {% extends 'game_review/base.html' %}
+<!-- Lists all games belonging to a single genre. -->
 
 {% block content %}
-    <ul>
-        {% for game in games %}
-            <a href="{% url 'show_video_game' game.pk %}"><li>{{game.title}}</li></a>
-            <p>{{game.description}}</p>
-        {% endfor %}
-    </ul>
-
+    <!-- Back to genres button -->
+    <a class="button" href="{% url 'home_page_final' %}">See other genres</a>
+    <!-- Game list -->
+    {% for game in games %}
+        <a class="card" href="{% url 'show_video_game_final' game.pk %}">
+            <h3>{{ game.title }}</h3>
+            <p>{{ game.description }}</p>
+        </a>
+    {% endfor %}
 {% endblock %}

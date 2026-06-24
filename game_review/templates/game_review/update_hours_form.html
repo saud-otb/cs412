@@ -1,0 +1,15 @@
+{% extends 'game_review/base.html' %}
+<!-- Form to update the hours played for a game the user is currently playing. -->
+
+{% block content %}
+<h1>Change Hours Played for "{{ entry.video_game.title }}"</h1>
+<!-- Update hours form -->
+<form action="{% url 'update_hours_final' entry.pk %}" method="POST">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <input type="submit" value="Update">
+    <a class="cancel-button" href="{% url 'currently_playing_final' entry.profile.pk %}">Cancel</a>
+</form>
+{% endblock %}

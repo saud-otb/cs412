@@ -1,0 +1,24 @@
+{% extends 'game_review/base.html' %}
+<!-- Registration form: creates a Django User account and a Gamer's Hub profile. -->
+
+{% block content %}
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!-- User account fields (username and password) -->
+    <h1>Create User Account</h1>
+    <table>
+        {{user_form.as_table}}
+    </table>
+    <br>
+    <!-- Profile fields (display name, bio, and profile image) -->
+    <h1>Create Profile</h1>
+    <table>
+        {{form.as_table}}
+    </table>
+    <!-- Submit and cancel buttons -->
+    <div class="form-buttons">
+        <input type="submit" name="submit" value="Submit">
+        <a href="{% url 'home_page_final' %}" id="cancel-button" class="button">Cancel</a>
+    </div>
+</form>
+{% endblock %}

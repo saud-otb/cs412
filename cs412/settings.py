@@ -144,3 +144,6 @@ REST_FRAMEWORK = {
   'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
   'PAGE_SIZE': 10
 }
+
+# Gemini API key for the game_review AI review overview feature.
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")

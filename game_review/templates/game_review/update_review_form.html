@@ -1,0 +1,17 @@
+{% extends 'game_review/base.html' %}
+<!-- Form to edit an existing review. -->
+
+{% block content %}
+    <!-- Update review form -->
+    <h1>Update your Review</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <div class="form-buttons">
+            <input type="submit" value="Update Review">
+            <a href="{% url 'show_video_game_final' review.game_library_entry.video_game.pk %}" class="button">Cancel</a>
+        </div>
+    </form>
+{% endblock %}

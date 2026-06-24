@@ -1,14 +1,24 @@
 {% extends 'game_review/base.html' %}
+<!-- Displays a user's profile info and links to their game library categories. -->
 
 {% block content %}
-    <h2>{{profile.display_name}}</h3>
-    <p>{{profile.bio}}</p>
-    <p>Joined in: {{profile.date_created}}</p>
+    <!-- Profile information -->
+    <div class="profile-card">
+        {% if profile.profile_image %}
+            <img src="{{ profile.profile_image.url }}" alt="{{ profile.display_name }}">
+        {% endif %}
+        <div class="profile-card-info">
+            <h2>{{ profile.display_name }}</h2>
+            {% if profile.bio %}<p>{{ profile.bio }}</p>{% endif %}
+            <p class="label">Joined: {{ profile.date_created }}</p>
+        </div>
+    </div>
 
+    <!-- Game library navigation buttons -->
     <h3>Game Library</h3>
-    <ul>
-        <a href="{% url 'want_to_play' profile.pk %}"> <li>Want to Play</li> </a>
-        <a href="{% url 'currently_playing' profile.pk %}"> <li>Currently Playing</li> </a>
-        <a href="{% url 'played' profile.pk %}"> <li>Played</li> </a>
-    </ul>
+    <div class="button-column">
+        <a class="button" href="{% url 'want_to_play_final' profile.pk %}">Want to Play</a>
+        <a class="button" href="{% url 'currently_playing_final' profile.pk %}">Currently Playing</a>
+        <a class="button" href="{% url 'played_final' profile.pk %}">Played</a>
+    </div>
 {% endblock %}

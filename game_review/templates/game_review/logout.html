@@ -1,0 +1,12 @@
+{% extends 'game_review/base.html' %}
+<!-- Logout confirmation page — the user must submit the form to log out. -->
+
+{% block content %}
+<!-- Logout confirmation form -->
+<form action="{% url 'logout_final' %}" method="POST">
+    {% csrf_token %}
+    <h1>Do you want to logout?</h1>
+    <input type="submit" value="Logout">
+    <input type="hidden" name="next" value="{% url 'home_page_final' %}">
+</form>
+{% endblock %}

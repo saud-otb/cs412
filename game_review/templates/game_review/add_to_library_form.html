@@ -1,0 +1,15 @@
+{% extends 'game_review/base.html' %}
+<!-- Form to add a game to the logged-in user's library with an initial status. -->
+
+{% block content %}
+<h1>Add "{{ game.title }}" to Your Library</h1>
+<!-- Add to library form -->
+<form action="{% url 'add_to_library_final' game.pk %}" method="POST">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <input type="submit" value="Add">
+    <a class="cancel-button" href="{% url 'show_video_game_final' game.pk %}">Cancel</a>
+</form>
+{% endblock %}

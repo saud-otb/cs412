@@ -1,0 +1,37 @@
+{% extends 'game_review/base.html' %}
+<!-- Displays search results for games, genres, and profiles matching the query. -->
+
+{% block content %}
+    <h1>Search</h1>
+    <!-- Search form -->
+    <form action="{% url 'search_final' %}" method="GET">
+        <input class="search-input" type="text" name="query" value="{{ query }}" placeholder="Search games, genres, or profiles">
+        <input type="submit" value="Search">
+    </form>
+
+    <h2>Results for "{{ query }}"</h2>
+
+    <!-- Games results -->
+    <h3>Games</h3>
+    {% for game in games %}
+        <a class="button" href="{% url 'show_video_game_final' game.pk %}">{{ game.title }}</a>
+    {% empty %}
+        <p>No games found.</p>
+    {% endfor %}
+
+    <!-- Genres results -->
+    <h3>Genres</h3>
+    {% for genre in genres %}
+        <a class="button" href="{% url 'show_genre_games_final' genre.pk %}">{{ genre.name }}</a>
+    {% empty %}
+        <p>No genres found.</p>
+    {% endfor %}
+
+    <!-- Profiles results -->
+    <h3>Profiles</h3>
+    {% for profile in profiles %}
+        <a class="button" href="{% url 'show_profile_final' profile.pk %}">{{ profile.display_name }}</a>
+    {% empty %}
+        <p>No profiles found.</p>
+    {% endfor %}
+{% endblock %}

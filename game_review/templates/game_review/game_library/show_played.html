@@ -1,14 +1,23 @@
 {% extends 'game_review/base.html' %}
+<!-- Lists games the profile has finished playing. -->
 
 {% block content %}
  <h1>Already Played Games: </h1>
+    <!-- Back to profile button -->
+    <a class="button" href="{% url 'show_profile_final' view.kwargs.pk %}">Back to Profile</a>
+    <!-- Game list -->
     {% if entries %}
         {% for entry in entries %}
-            <div>
-                <a href="{% url 'show_video_game' entry.video_game.pk %}"><h2>{{ entry.video_game.title }}</h2></a>
+            <a class="card" href="{% url 'show_video_game_final' entry.video_game.pk %}">
+                <h2>{{ entry.video_game.title }}</h2>
                 <p>{{ entry.video_game.description }}</p>
                 <p>Added: {{ entry.date_added }}</p>
-            </div>
+            </a>
+            <!-- Change category and write review buttons -->
+            {% if request.user.is_authenticated and request.user == entry.profile.user %}
+                <a class="button" href="{% url 'update_library_entry_final' entry.pk %}">Change Category</a>
+                <a class="button" href="{% url 'create_review_final' entry.pk %}">Write a Review</a>
+            {% endif %}
         {% endfor %}
     {% else %}
         <p>No games in this list yet.</p>

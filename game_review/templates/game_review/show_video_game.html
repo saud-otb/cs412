@@ -1,23 +1,47 @@
 {% extends 'game_review/base.html' %}
+<!-- Displays a game's details, AI overview, and all player reviews. -->
 
 {% block content %}
-    <h1>{{game.title}}</h1>
-    <h3>Developer: {{game.developer}}</h3>
-    <h3>Publisher: {{game.publisher}}</h3>
-    <h3>Released in: {{game.release_date}}</h3>
-    <h3>Description: </h3>
-    <p>{{game.description}}</p>
+    <!-- Display game's details -->
+    <div class="game-detail">
+        <h1>{{ game.title }}</h1>
+        <div class="game-meta">
+            <p class="label">Developer: {{ game.developer }}</p>
+            <p class="label">Publisher: {{ game.publisher }}</p>
+            <p class="label">Released: {{ game.release_date }}</p>
+        </div>
+        <h3>Description</h3>
+        <p>{{ game.description }}</p>
+        <!-- Add to library button, only shown to logged-in users who haven't added this game yet -->
+        {% if logged_in_user and not in_library %}
+            <a class="button" href="{% url 'add_to_library_final' game.pk %}">Add to Library</a>
+        {% endif %}
+        <a class="button" href="{% url 'show_genre_games_final' game.genre.pk %}">See other {{ game.genre.name }} games</a>
+    </div>
 
-    <h2>Reviews:</h2>
+    <h2>Reviews</h2>
+    <!-- AI overview card, only shown when a summary has been generated -->
+    {% if ai_summary %}
+        <div class="ai-overview">
+            <h3>AI Overview</h3>
+            <p>{{ ai_summary|linebreaks }}</p>
+        </div>
+    {% endif %}
+    <!-- Displays all reviews on this game. -->
     {% if reviews %}
         {% for review in reviews %}
-        <div>
-            <h3>{{ review.review_title }}</h3>
-            <p>Rating: {{ review.rating }}/10</p>
-            <p>{{ review.review_text }}</p>
-            <p>Recommended: {{ review.recommended }}</p>
-            <p>By: {{ review.game_library_entry.profile }}</p>
-        </div>
+            <div class="review-card">
+                <h3>{{ review.review_title }}</h3>
+                <p class="label">Rating: {{ review.rating }}/10</p>
+                <p>{{ review.review_text }}</p>
+                <p class="label">Recommended: {{ review.recommended }}</p>
+                <p class="label">By: {{ review.game_library_entry.profile }}</p>
+                <!-- Edit and delete buttons for logged in users only -->
+                {% if logged_in_user and review.game_library_entry.profile == logged_in_user %}
+                    <a class="button" href="{% url 'update_review_final' review.pk %}">Edit</a>
+                    <a class="button" href="{% url 'delete_review_final' review.pk %}">Delete</a>
+                {% endif %}
+            </div>
         {% endfor %}
     {% else %}
         <p>No reviews yet.</p>

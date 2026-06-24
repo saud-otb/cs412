@@ -1,12 +1,13 @@
 {% extends 'game_review/base.html' %}
+<!-- Lists every game in the database. -->
 
 {% block content %}
     <h2>Showing All Games</h2>
-    <ul>
-        {% for game in games %}
-            <a href="{% url 'show_video_game' game.pk %}"><li>{{game.title}}</li></a>
-            <p>{{game.description}}</p>
-        {% endfor %}
-    </ul>
-
+    <!-- Game list -->
+    {% for game in games %}
+        <a class="card" href="{% url 'show_video_game_final' game.pk %}">
+            <h3>{{ game.title }}</h3>
+            <p>{{ game.description }}</p>
+        </a>
+    {% endfor %}
 {% endblock %}
