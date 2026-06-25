@@ -1,14 +1,18 @@
 # File: ai.py
 # Author: Saud Alotaibi
-# Description: Helper that summarizes a game's reviews using the Gemini API.
+# Description: Helper that summarizes a game's reviews using the Gemini REST API.
 
-try:
-    import truststore
-    truststore.inject_into_ssl()
-except Exception:
-    pass
+import json
+import urllib.request
 
 from django.conf import settings
+
+# Gemini REST endpoint. Using urllib (standard library) instead of the
+# google-genai SDK so this works on any Python version with nothing to install.
+GEMINI_API_URL = (
+    "https://generativelanguage.googleapis.com/v1beta/models/"
+    "gemini-2.5-flash:generateContent"
+)
 
 
 def summarize_reviews(game, reviews):
@@ -17,11 +21,6 @@ def summarize_reviews(game, reviews):
     Returns an empty string if there are no reviews. Raises on API errors so
     the caller can decide how to handle failures.'''
 
-    try:
-        from google import genai
-    except ImportError:
-        return ""
-    
     if not reviews:
         return ""
 
@@ -35,13 +34,13 @@ def summarize_reviews(game, reviews):
         )
 
     # Compute the average rating to prepend to the AI response
-    sum = 0
+    total = 0
     for review in reviews:
-        sum += review.rating
+        total += review.rating
 
-    average_rating = sum / len(reviews)
+    average_rating = total / len(reviews)
 
-    # Build the prompt instructing Gemini to summarize based only on the provided reviews
+    # Build the prompt instructing Gemini to summarize based only on the reviews
     prompt = (
         f"You are summarizing player reviews for the video game '{game.title}'.\n"
         f"Write a short overview (3-5 sentences), then a 'The Good' bullet list and a "
@@ -49,11 +48,18 @@ def summarize_reviews(game, reviews):
         f"Reviews:\n" + "\n".join(lines)
     )
 
-    # Call the Gemini API and return the response with the average rating prepended
-    client = genai.Client(api_key=settings.GEMINI_API_KEY)
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=prompt,
+    # Send the prompt to the Gemini REST API as a JSON POST request
+    body = json.dumps({"contents": [{"parts": [{"text": prompt}]}]}).encode("utf-8")
+    request = urllib.request.Request(
+        f"{GEMINI_API_URL}?key={settings.GEMINI_API_KEY}",
+        data=body,
+        headers={"Content-Type": "application/json"},
     )
 
-    return f"Average Rating: {average_rating:.1f}/10\n\n" + response.text
+    with urllib.request.urlopen(request, timeout=30) as response:
+        data = json.loads(response.read().decode("utf-8"))
+
+    # Pull the generated text out of the API response
+    text = data["candidates"][0]["content"]["parts"][0]["text"]
+
+    return f"Average Rating: {average_rating:.1f}/10\n\n" + text
